@@ -1,9 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const FavoriteRecipes = () => {
-  return (
-    <h1>Favorite Recipes</h1>
-  )
-}
+const FavoriteRecipes = () => (
+  <h1>Favorite Recipes</h1>
+);
 
 export default FavoriteRecipes;

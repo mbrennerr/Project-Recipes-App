@@ -11,15 +11,15 @@ import RecipesDone from './pages/RecipesDone';
 
 function App() {
   return (
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/comidas" component={Foods} />
-        <Route exact path="/bebidas" component={Drinks} />
-        <Route exact path="/explorar" component={Explore} />
-        <Route exact path="/perfil" component={Profile} />
-        <Route exact path="/receitas-feitas" component={RecipesDone} />
-        <Route exact path="/receitas-favoritas" component={FavoriteRecipes} />
-      </Switch>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/comidas" component={ Foods } />
+      <Route exact path="/bebidas" component={ Drinks } />
+      <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/perfil" component={ Profile } />
+      <Route exact path="/receitas-feitas" component={ RecipesDone } />
+      <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
+    </Switch>
   );
 }
 
