@@ -1,7 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
 
-const FavoriteRecipes = () => (
-  <h1>Favorite Recipes</h1>
-);
+function FavoriteRecipes() {
+  return (
+    <div>
+      <Header />
+    </div>
+  );
+}
 
 export default FavoriteRecipes;

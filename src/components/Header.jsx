@@ -5,6 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import { enableSearchBar, enableButton } from '../redux/actions';
 import '../styles/header.css';
+import getPlaceholder from '../utils/getPlaceholder';
 
 function Header() {
   const enable = (
@@ -27,26 +28,16 @@ function Header() {
   };
 
   useEffect(() => {
-    if (historico === '/comidas' || historico === '/bebidas') {
+    if (historico === '/comidas' || historico === '/bebidas'
+     || historico === '/explorar/comidas/area') {
       dispatch(enableButton(true));
     } else {
       dispatch(enableButton(false));
     }
-  }, []);
+  });
 
   useEffect(() => {
-    if (historico === '/comidas') {
-      setState('Comidas');
-    }
-    if (historico === '/explorar') {
-      setState('Explorar');
-    }
-    if (historico === '/bebidas') {
-      setState('Bebidas');
-    }
-    if (historico === '/perfil') {
-      setState('Perfil');
-    }
+    setState(getPlaceholder(historico));
   }, [historico]);
 
   return (
