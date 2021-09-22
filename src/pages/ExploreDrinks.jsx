@@ -1,11 +1,14 @@
 import React from 'react';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
-const ExploreDrinks = () => (
-  <div>
-    <h1>Explore Drinks</h1>
-    <Footer />
-  </div>
-);
+function ExploreDrinks() {
+  return (
+    <div>
+      <Header />
+      <Footer />
+    </div>
+  );
+}
 
 export default ExploreDrinks;

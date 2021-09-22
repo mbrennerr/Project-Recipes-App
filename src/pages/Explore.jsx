@@ -1,11 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
 
-const Explore = () => (
-  <div>
-    <h1>Explore</h1>
-    <Footer />
-  </div>
-);
+function Explore() {
+  const enableSearch = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
+  );
+  return (
+    <div>
+      <Header />
+      {enableSearch && <SearchBar />}
+      <Footer />
+    </div>
+  );
+}
 
 export default Explore;
