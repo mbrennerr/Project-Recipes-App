@@ -1,7 +1,11 @@
 import React from 'react';
+import Footer from '../components/Footer';
 
 const Drinks = () => (
-  <h1>Drinks</h1>
+  <div>
+    <h1>Drinks</h1>
+    <Footer />
+  </div>
 );
 
 export default Drinks;

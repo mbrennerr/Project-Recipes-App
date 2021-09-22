@@ -1,11 +1,11 @@
 import React from 'react';
 import Footer from '../components/Footer';
 
-const Foods = () => (
+const ExploreFoods = () => (
   <div>
-    <h1>Foods</h1>
+    <h1>Explore Foods</h1>
     <Footer />
   </div>
 );
 
-export default Foods;
+export default ExploreFoods;
