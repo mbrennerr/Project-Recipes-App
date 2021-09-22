@@ -1,15 +1,74 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import { enableSearchBar, enableButton } from '../redux/actions';
 import '../styles/header.css';
 
 function Header() {
+  const enable = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableButton)
+  );
+  const [state, setState] = useState('');
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleClick = () => {
+    dispatch(enableSearchBar());
+  };
+
+  const historico = history.location.pathname;
+
+  const handleProfile = () => {
+    if (historico !== '/perfil') {
+      history.push('/perfil');
+    }
+  };
+
+  useEffect(() => {
+    if (historico === '/comidas' || historico === '/bebidas') {
+      dispatch(enableButton(true));
+    } else {
+      dispatch(enableButton(false));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (historico === '/comidas') {
+      setState('Comidas');
+    }
+    if (historico === '/explorar') {
+      setState('Explorar');
+    }
+    if (historico === '/bebidas') {
+      setState('Bebidas');
+    }
+    if (historico === '/perfil') {
+      setState('Perfil');
+    }
+  }, [historico]);
+
   return (
     <div className="header">
-      <Link to="/perfil" data-testId="profile-top-btn"><img src={ profileIcon } alt="profile" /></Link>
-      <h3 data-testId="page-title">Place holder</h3>
-      <button data-testId="search-top-btn"><img src={ searchIcon } alt="" /></button>
+      <button
+        type="button"
+        onClick={ handleProfile }
+      >
+        <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
+      </button>
+      <h3
+        data-testid="page-title"
+      >
+        {state}
+      </h3>
+      {enable && (
+        <button
+          type="button"
+          onClick={ handleClick }
+        >
+          <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
+        </button>)}
     </div>
   );
 }

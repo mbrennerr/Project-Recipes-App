@@ -1,13 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 
 const Foods = () => {
-  const enableSearch = useSelector(({ functionsReducer }) => functionsReducer.enableSearch);
+  const enableSearch = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
+  );
+
   return (
     <div>
-      <h1>Foods</h1>
+      <Header />
       {enableSearch && <SearchBar />}
       <Footer />
     </div>

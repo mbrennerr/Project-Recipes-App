@@ -1,11 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
 
-const Profile = () => (
-  <div>
-    <h1>Profile</h1>
-    <Footer />
-  </div>
-);
+function Profile() {
+  const enableSearch = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
+  );
+
+  return (
+    <div>
+      <Header />
+      {enableSearch && <SearchBar />}
+      <Footer />
+    </div>
+  );
+}
 
 export default Profile;
