@@ -1,3 +1,45 @@
+.explore-button {
+  background-color: lightblue;
+  border-color: lightcyan;
+  border-radius: 5px;
+  border-style: solid;
+  color: black;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.explore-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40%;
+}
+
+.item-card {
+  background-color: lightblue;
+  border-color: lightcyan;
+  border-radius: 10px;
+  border-style: solid;
+  margin: 5% 0;
+  padding: 10px;
+  text-align: center;
+  width: 80%;
+}
+
+.item-card img {
+  width: 100%;
+}
+
+.item-card-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 .meals {
   align-items: center;
   background: #0fa36b;
@@ -45,6 +87,11 @@
   font-family: Montserrat , sans-serif;
   font-size: 3em;
   font-weight: 900;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }
 
 @keyframes shake {
