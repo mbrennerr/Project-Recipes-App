@@ -1,10 +1,42 @@
+.explore-button {
+  background-color: lightblue;
+  border-style: solid;
+  border-color: lightcyan;
+  border-radius: 5px;
+  color: white;
+  font-size: 30px;
+  margin: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.explore-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40%;
+}
+
 .item-card {
-  padding: 10%;
+  background-color:lightblue;
+  border-style: solid;
+  border-color: lightcyan;
+  border-radius: 10px;
+  margin: 5% 0;
+  padding: 10px;
   text-align: center;
+  width: 80%;
 }
 
 .item-card img {
-  width: 80%;
+  width: 100%;
+}
+
+.item-card-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .meals {
