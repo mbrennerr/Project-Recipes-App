@@ -1,0 +1,15 @@
+.btns-profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.btns-profile button {
+  border-radius: 10px;
+  margin: 10px auto;
+  padding: 10px;
+  width: 70%;
+}
+
+.btns-profile h3 {
+  margin: 70px auto;
+}

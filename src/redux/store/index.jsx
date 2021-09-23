@@ -10,9 +10,11 @@ store.subscribe(() => {
   const { mealsToken, cocktailsToken, email } = user;
   localStorage.setItem('mealsToken', mealsToken);
   localStorage.setItem('cocktailsToken', cocktailsToken);
-  localStorage.setItem('user', JSON.stringify({
-    email,
-  }));
+  if (email !== '') {
+    localStorage.setItem('user', JSON.stringify({
+      email,
+    }));
+  }
 });
 
 export default store;
