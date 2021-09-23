@@ -1,3 +1,12 @@
+.item-card {
+  padding: 10%;
+  text-align: center;
+}
+
+.item-card img {
+  width: 80%;
+}
+
 .meals {
   align-items: center;
   background: #0fa36b;

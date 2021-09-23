@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function ItemCard({ name, thumb, path }) {
+function ItemCard({ id, name, path, thumb }) {
   return (
-    <div>
-      <Link to={ path }>
-        <h3>{ name }</h3>
-        <img src={ thumb } alt={ name } />
+    <div className="item-card">
+      <Link to={ path } data-testid={ `${id}-recipe-card` }>
+        <h2 data-testid={ `${id}-card-name` }>{ name }</h2>
+        <img src={ thumb } alt={ name } data-testid={ `${id}-card-img` } />
       </Link>
     </div>
   );
 }
 
 ItemCard.propTypes = {
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   thumb: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
