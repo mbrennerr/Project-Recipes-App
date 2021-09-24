@@ -11,6 +11,7 @@ import RecipesDone from './pages/RecipesDone';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreIngredients from './pages/ExploreIngredients';
+import RecipesDetails from './pages/RecipesDetails';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
       <Route path="/explorar/comidas/ingredientes" component={ ExploreIngredients } />
       <Route path="/explorar/bebidas" component={ ExploreDrinks } />
       <Route path="/explorar/bebidas/ingredientes" component={ ExploreIngredients } />
+      <Route path="/comidas/:id" component={ RecipesDetails } />
+      <Route path="/bebidas/:id" component={ RecipesDetails } />
     </Switch>
   );
 }
