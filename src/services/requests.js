@@ -26,3 +26,12 @@ export const fetchRecipesByCategory = async (api, category) => {
   }
   return result.drinks.slice(0, numberOfRecipes);
 };
+
+export const fetchIngredients = async (limit, api) => {
+  const response = await fetch(`https://www.${api}.com/api/json/v1/1/list.php?i=list`);
+  const result = await response.json();
+  if (api === 'themealdb') {
+    return result.meals.slice(0, limit);
+  }
+  return result.drinks.slice(0, limit);
+};
