@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import RecipeCard from '../components/RecipeCard';
-import { fetchCategories, fetchRecipes, fetchRecipesByCategory } from '../services/requests';
+import {
+  fetchCategories,
+  fetchRecipes,
+  fetchRecipesByCategory,
+} from '../services/requests';
 
 function Drinks() {
   const enableSearch = (
@@ -12,7 +16,9 @@ function Drinks() {
   );
 
   const [drinksList, setDrinksList] = useState([]);
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
+  const [filterCategory, setFilterCategory] = useState('');
+  const firstRender = useRef(true);
 
   const handleDrinksList = async () => {
     const limit = 12;
@@ -22,32 +28,56 @@ function Drinks() {
 
   const handleCategoriesList = async () => {
     const newCategoriesList = await fetchCategories('thecocktaildb');
-    setCategoriesList(newCategoriesList);
+    setCategoriesList([...categoriesList, ...newCategoriesList]);
   };
 
-  const handleFetchByCategory = async ({ target }) => {
-    const category = target.innerHTML;
+  const handleFetchByCategory = async (category) => {
     const recipeList = await fetchRecipesByCategory('thecocktaildb', category);
     setDrinksList(recipeList);
   };
 
+  const handleFilter = ({ target }) => {
+    const category = target.innerHTML;
+    if (category === 'All') {
+      handleDrinksList();
+    } else if (filterCategory !== category) {
+      handleFetchByCategory(category);
+      setFilterCategory(category);
+    } else {
+      handleDrinksList();
+      setFilterCategory('');
+    }
+  };
+
   useEffect(() => {
-    handleDrinksList();
-    handleCategoriesList();
-  }, []);
+    if (firstRender.current) {
+      firstRender.current = false;
+      handleDrinksList();
+      handleCategoriesList();
+    }
+  });
 
   return (
     <div>
       <Header />
       {enableSearch && <SearchBar />}
-      {categoriesList.length > 0 ? (categoriesList.map(({ strCategory }) => (<button type="button" key={ strCategory } onClick={ handleFetchByCategory } data-testid={ `${strCategory}-category-filter` }>{strCategory}</button>))) : <p>loading</p>}
-        {/* {categoriesList.map(({ strCategory }) => (<button type="button" key={ strCategory } onClick={ handleFetchByCategory } data-testid={ `${strCategory}-category-filter` }>{strCategory}</button>))} */}
+      {categoriesList.length > 1 ? (
+        categoriesList.map(({ strCategory }) => (
+          <button
+            type="button"
+            key={ strCategory }
+            onClick={ handleFilter }
+            data-testid={ `${strCategory}-category-filter` }
+          >
+            {strCategory}
+          </button>)))
+        : <p>loading</p>}
       <div className="item-card-container">
         {drinksList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
           key={ idDrink }
           id={ index }
           name={ strDrink }
-          path={ `comidas/${idDrink}` }
+          path={ `bebidas/${idDrink}` }
           thumb={ strDrinkThumb }
         />))}
       </div>
