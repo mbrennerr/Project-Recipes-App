@@ -9,7 +9,7 @@ import '../styles/profile.css';
 function Profile() {
   const history = useHistory();
   let userEmail = JSON.parse(localStorage.getItem('user'));
-  if(userEmail === null) {
+  if (userEmail === null) {
     userEmail = '';
   } else {
     userEmail = userEmail.email;
