@@ -8,7 +8,12 @@ import '../styles/profile.css';
 
 function Profile() {
   const history = useHistory();
-  const userEmail = JSON.parse(localStorage.getItem('user')).email;
+  let userEmail = JSON.parse(localStorage.getItem('user'));
+  if(userEmail === null) {
+    userEmail = '';
+  } else {
+    userEmail = userEmail.email;
+  }
 
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
