@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import FavoriteButton from '../components/FavoriteButton';
+import ShareButton from '../components/ShareButton';
 import { fetchDetails } from '../services/requests';
 
 const RecipesDetails = (props) => {
@@ -18,64 +20,58 @@ const RecipesDetails = (props) => {
     handleFecthDetail();
   }, []);
   return (
-    <article>
-
-      <img
-        data-testid="recipe-photo"
-        src=""
-        alt=""
-      />
-
-      <h1 data-testid="recipe-title">
-        titulo
-      </h1>
-
-      <button data-testid="share-btn" type="button">
-        Compartilhar
-      </button>
-
-      <button type="button" data-testid="favorite-btn">
-        Favoritos
-      </button>
-
-      <p data-testid="recipe-category">
-        Ctegoria
-      </p>
-
-      <h3>
-        Ingredients
-      </h3>
-
-      <h3>
-        Instructions
-      </h3>
-      <p data-testid="instructions">
-        Texto
-      </p>
-      <div
-        data-testid="video"
-      >
-        <div>
-          <button type="button">
-            Play
-          </button>
-        </div>
-      </div>
+    <div>
 
       <div>
-        CARD
+        <img data-testid="recipe-photo" src="" alt="" />
+        Image
       </div>
-
+      <div>
+        <h1 data-testid="recipe-title">
+          title
+        </h1>
+      </div>
+      <div>
+        <ShareButton />
+      </div>
+      <div>
+        <FavoriteButton />
+      </div>
+      <p data-testid="recipe-category">
+        Category
+      </p>
+      <div>
+        <h3>
+          Ingredients
+        </h3>
+        <p>ingredientsTex</p>
+      </div>
+      <div>
+        <h3>
+          Instructions
+        </h3>
+        <p data-testid="instructions">
+          Instructions Text
+        </p>
+      </div>
+      <div>
+        <iframe
+          data-testid="video"
+          whidth="548"
+          height="421"
+          src=""
+          frameBorder="0"
+          title="Youtube Video Player"
+        />
+      </div>
+      <div>
+        <h3>Recommended Recipes</h3>
+      </div>
       <button type="button" data-testid="start-recipe-btn">
         Iniciar Receita
       </button>
 
-    </article>
+    </div>
   );
 };
-
-RecipesDetails.propTypes = {
-
-};
-
 export default RecipesDetails;
