@@ -31,3 +31,16 @@
   position: fixed;
   width: 100%;
 }
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-list button {
+  background-color: lightblue;
+  margin: 2px auto;
+  width: 100px;
+  height: 35px;
+  border-radius: 5px;
+}

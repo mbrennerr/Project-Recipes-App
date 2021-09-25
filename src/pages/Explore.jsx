@@ -38,7 +38,7 @@ function Explore() {
         </button>
         <button
           type="button"
-          to="/explorar/bebidas"
+          onClick={ handleExplore }
           className="explore-button"
           data-testid="explore-drinks"
         >

@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const ENABLE_DISABLE_SEARCH_BAR = 'ENABLE_DISABLE_SEARCH_BAR';
 export const ENABLE_BUTTON = 'ENABLE_BUTTON';
+export const DISABLE_BUTTON = 'DISABLE_BUTTON';
 
 export const setUserEmail = (email) => ({
   type: LOGIN, email,
@@ -12,4 +13,8 @@ export const enableSearchBar = () => ({
 
 export const enableButton = (change) => ({
   type: ENABLE_BUTTON, change,
+});
+
+export const disableButton = (change) => ({
+  type: DISABLE_BUTTON, change,
 });
