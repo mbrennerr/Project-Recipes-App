@@ -20,7 +20,7 @@
 }
 
 .btn-profile {
-  left: 2%;
+  left: 5%;
   position: absolute;
 }
 
@@ -31,5 +31,5 @@
 
 .btn-search {
   position: absolute;
-  right: 2%;
+  right: 5%;
 }
