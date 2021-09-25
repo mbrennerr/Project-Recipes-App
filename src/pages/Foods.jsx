@@ -9,6 +9,7 @@ import {
   fetchRecipes,
   fetchRecipesByCategory,
 } from '../services/requests';
+import '../styles/itemCard.css';
 
 const Foods = () => {
   const enableSearch = (
@@ -61,17 +62,19 @@ const Foods = () => {
     <div>
       <Header />
       {enableSearch && <SearchBar />}
-      {categoriesList.length > 1 ? (
-        categoriesList.map(({ strCategory }) => (
-          <button
-            type="button"
-            key={ strCategory }
-            onClick={ handleFilter }
-            data-testid={ `${strCategory}-category-filter` }
-          >
-            {strCategory}
-          </button>)))
-        : <p>loading</p>}
+      <div className="category-list">
+        {categoriesList.length > 1 ? (
+          categoriesList.map(({ strCategory }) => (
+            <button
+              type="button"
+              key={ strCategory }
+              onClick={ handleFilter }
+              data-testid={ `${strCategory}-category-filter` }
+            >
+              {strCategory}
+            </button>)))
+          : <p>loading</p>}
+      </div>
       <div className="item-card-container">
         {foodsList.map(({ idMeal, strMeal, strMealThumb }, index) => (<RecipeCard
           key={ idMeal }
