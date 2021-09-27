@@ -15,6 +15,6 @@ export const enableButton = (change) => ({
   type: ENABLE_BUTTON, change,
 });
 
-export const disableButton = (change) => ({
-  type: DISABLE_BUTTON, change,
+export const disableButton = () => ({
+  type: DISABLE_BUTTON,
 });
