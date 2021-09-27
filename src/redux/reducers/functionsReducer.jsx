@@ -1,8 +1,9 @@
-import { ENABLE_DISABLE_SEARCH_BAR, ENABLE_BUTTON } from '../actions';
+import { ENABLE_DISABLE_SEARCH_BAR, ENABLE_BUTTON, DISABLE_BUTTON } from '../actions';
 
 const initialState = {
   enableSearch: false,
   enableButton: false,
+  disableButton: true,
 };
 
 const functionsReducer = (state = initialState, { type, change }) => {
@@ -11,6 +12,8 @@ const functionsReducer = (state = initialState, { type, change }) => {
     return { ...state, enableSearch: !state.enableSearch };
   case ENABLE_BUTTON:
     return { ...state, enableButton: change };
+  case DISABLE_BUTTON:
+    return { ...state, disableButton: change };
   default:
     return state;
   }
