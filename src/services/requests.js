@@ -26,3 +26,19 @@ export const fetchRecipesByCategory = async (api, category) => {
   }
   return result.drinks.slice(0, numberOfRecipes);
 };
+
+export const fetchSearch = async (query, endpoint, api) => {
+  let response;
+  if (endpoint === "ingredient") {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/filter.php?i=${query}`);
+  } else if (endpoint === "name") {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?s=${query}`);
+  } else {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?f=${query}`);
+  }
+  const result = await response.json();
+  if (api === 'themealdb') {
+    return result.meals;
+  }
+  return result.drinks;
+};
