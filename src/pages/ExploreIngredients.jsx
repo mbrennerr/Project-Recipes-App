@@ -37,7 +37,7 @@ function ExploreIngredients() {
             key={ strIngredient }
             id={ index }
             name={ strIngredient }
-            path={ `comidas/${strIngredient}` }
+            path={ `ingredientes/${strIngredient}` }
             thumb={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
           />))}
         </div>
@@ -52,7 +52,7 @@ function ExploreIngredients() {
           key={ strIngredient1 }
           id={ index }
           name={ strIngredient1 }
-          path={ `bebidas/${strIngredient1}` }
+          path={ `ingredientes/${strIngredient1}` }
           thumb={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png` }
         />))}
       </div>

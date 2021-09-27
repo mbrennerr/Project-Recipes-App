@@ -11,6 +11,8 @@ import RecipesDone from './pages/RecipesDone';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreIngredients from './pages/ExploreIngredients';
+import IngredientsFilter from './pages/IngredientsFilter';
+import ExploreFoodsArea from './pages/ExploreFoodsArea';
 
 function App() {
   return (
@@ -23,9 +25,28 @@ function App() {
       <Route exact path="/receitas-feitas" component={ RecipesDone } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
       <Route exact path="/explorar/comidas" component={ ExploreFoods } />
-      <Route path="/explorar/comidas/ingredientes" component={ ExploreIngredients } />
+      <Route
+        exact
+        path="/explorar/comidas/ingredientes"
+        component={ ExploreIngredients }
+      />
+      <Route
+        exact
+        path="/explorar/comidas/ingredientes/:id"
+        component={ IngredientsFilter }
+      />
       <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
-      <Route path="/explorar/bebidas/ingredientes" component={ ExploreIngredients } />
+      <Route
+        exact
+        path="/explorar/bebidas/ingredientes"
+        component={ ExploreIngredients }
+      />
+      <Route
+        exact
+        path="/explorar/bebidas/ingredientes/:id"
+        component={ IngredientsFilter }
+      />
+      <Route exact path="/explorar/comidas/area" component={ ExploreFoodsArea } />
     </Switch>
   );
 }

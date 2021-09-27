@@ -35,3 +35,12 @@ export const fetchIngredients = async (limit, api) => {
   }
   return result.drinks.slice(0, limit);
 };
+
+export const fetchIngredientsFilter = async (limit, api, ingredient) => {
+  const response = await fetch(`https://www.${api}.com/api/json/v1/1/filter.php?i=${ingredient}`);
+  const result = await response.json();
+  if (api === 'themealdb') {
+    return result.meals.slice(0, limit);
+  }
+  return result.drinks.slice(0, limit);
+};
