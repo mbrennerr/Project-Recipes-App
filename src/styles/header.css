@@ -5,19 +5,20 @@
 }
 
 .header {
+  align-items: center;
   background-color: lightblue;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 41% 50% 0%;
   padding: 10px;
-  top: 0;
   width: 100%;
 }
 
 .header button {
   background: none;
   border-style: none;
+  width: fit-content;
 }
 
-.header h3 {
+.header-title {
   margin-top: 3.5px;
 }
