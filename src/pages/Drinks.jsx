@@ -27,7 +27,7 @@ function Drinks() {
   };
 
   const handleCategoriesList = async () => {
-    const newCategoriesList = await fetchCategories('thecocktaildb');
+    const newCategoriesList = await fetchCategories('thecocktaildb', 'c');
     setCategoriesList([...categoriesList, ...newCategoriesList]);
   };
 
@@ -61,17 +61,19 @@ function Drinks() {
     <div>
       <Header />
       {enableSearch && <SearchBar />}
-      {categoriesList.length > 1 ? (
-        categoriesList.map(({ strCategory }) => (
-          <button
-            type="button"
-            key={ strCategory }
-            onClick={ handleFilter }
-            data-testid={ `${strCategory}-category-filter` }
-          >
-            {strCategory}
-          </button>)))
-        : <p>loading</p>}
+      <div className="category-list">
+        {!enableSearch && (categoriesList.length > 1 ? (
+          categoriesList.map(({ strCategory }) => (
+            <button
+              type="button"
+              key={ strCategory }
+              onClick={ handleFilter }
+              data-testid={ `${strCategory}-category-filter` }
+            >
+              {strCategory}
+            </button>)))
+          : <p>loading</p>)}
+      </div>
       <div className="item-card-container">
         {drinksList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
           key={ idDrink }
