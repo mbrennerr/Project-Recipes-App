@@ -27,7 +27,7 @@ function Drinks() {
   };
 
   const handleCategoriesList = async () => {
-    const newCategoriesList = await fetchCategories('thecocktaildb');
+    const newCategoriesList = await fetchCategories('thecocktaildb', 'c');
     setCategoriesList([...categoriesList, ...newCategoriesList]);
   };
 

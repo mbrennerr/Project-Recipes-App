@@ -1,17 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import Drinks from './pages/Drinks';
-import Explore from './pages/Explore';
-import FavoriteRecipes from './pages/FavoriteRecipes';
-import Foods from './pages/Foods';
-import Login from './pages/Login';
-import Profile from './pages/Profile';
-import RecipesDone from './pages/RecipesDone';
-import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinks from './pages/ExploreDrinks';
-import ExploreIngredients from './pages/ExploreIngredients';
-import IngredientsFilter from './pages/IngredientsFilter';
+import { Drinks, Explore, FavoriteRecipes,
+  Foods, Login, Profile, RecipesDone, ExploreFoods,
+  ExploreDrinks, ExploreIngredients, IngredientsFilter, NotFound } from './pages';
 import ExploreFoodsArea from './pages/ExploreFoodsArea';
 
 function App() {
@@ -47,6 +39,10 @@ function App() {
         component={ IngredientsFilter }
       />
       <Route exact path="/explorar/comidas/area" component={ ExploreFoodsArea } />
+      <Route path="/explorar/comidas/area" component={ ExploreFoodsArea } />
+      <Route path="/explorar/bebidas/area" component={ NotFound } />
+      <Route path="/explorar/comidas" component={ ExploreFoods } />
+      <Route path="/explorar/bebidas" component={ ExploreDrinks } />
     </Switch>
   );
 }

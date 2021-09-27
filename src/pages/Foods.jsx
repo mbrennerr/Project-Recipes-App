@@ -28,7 +28,7 @@ const Foods = () => {
   };
 
   const handleCategoriesList = async () => {
-    const newCategoriesList = await fetchCategories('themealdb');
+    const newCategoriesList = await fetchCategories('themealdb', 'c');
     setCategoriesList(categoriesList.concat(newCategoriesList));
   };
 

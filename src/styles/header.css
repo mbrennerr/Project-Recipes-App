@@ -7,9 +7,9 @@
 .header {
   align-items: center;
   background-color: lightblue;
-  display: grid;
-  grid-template-columns: 41% 50% 0%;
+  display: flex;
   padding: 10px;
+  position: relative;
   width: 100%;
 }
 
@@ -19,6 +19,17 @@
   width: fit-content;
 }
 
+.btn-profile {
+  left: 5%;
+  position: absolute;
+}
+
 .header-title {
-  margin-top: 3.5px;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-search {
+  position: absolute;
+  right: 5%;
 }
