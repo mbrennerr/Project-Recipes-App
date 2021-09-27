@@ -13,7 +13,7 @@ const functionsReducer = (state = initialState, { type, change }) => {
   case ENABLE_BUTTON:
     return { ...state, enableButton: change };
   case DISABLE_BUTTON:
-    return { ...state, disableButton: change };
+    return { ...state, disableButton: !state.disableButton };
   default:
     return state;
   }

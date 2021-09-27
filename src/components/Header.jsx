@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import { enableSearchBar, enableButton, disableButton } from '../redux/actions';
+import { enableSearchBar, enableButton } from '../redux/actions';
 import '../styles/header.css';
 import getPlaceholder from '../utils/getPlaceholder';
 
@@ -12,17 +12,12 @@ function Header() {
     useSelector(({ functionsReducer }) => functionsReducer.enableButton)
   );
 
-  // const enable1 = (
-  //   useSelector(({ functionsReducer }) => functionsReducer.disableButton)
-  // );
-
   const [state, setState] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleClick = () => {
     dispatch(enableSearchBar());
-    dispatch(disableButton());
   };
 
   const historico = history.location.pathname;
@@ -64,7 +59,7 @@ function Header() {
         </h3>
       </div>
       <div className="btn-search">
-        {enable && (
+        { enable && (
           <button
             type="button"
             onClick={ handleClick }

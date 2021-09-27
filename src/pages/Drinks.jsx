@@ -62,7 +62,7 @@ function Drinks() {
       <Header />
       {enableSearch && <SearchBar />}
       <div className="category-list">
-        {categoriesList.length > 1 ? (
+        {!enableSearch && (categoriesList.length > 1 ? (
           categoriesList.map(({ strCategory }) => (
             <button
               type="button"
@@ -72,7 +72,7 @@ function Drinks() {
             >
               {strCategory}
             </button>)))
-          : <p>loading</p>}
+          : <p>loading</p>)}
       </div>
       <div className="item-card-container">
         {drinksList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
