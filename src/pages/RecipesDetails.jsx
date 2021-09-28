@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
 import ShareButton from '../components/ShareButton';
@@ -6,8 +6,9 @@ import { fetchDetails, fetchRecipes } from '../services/requests';
 
 const RecipesDetails = () => {
   const [details, setDetails] = useState([]);
-  const [drinks, setDrinks] = useState([]);
+  const [recipes, setRecipes] = useState([]);
   const history = useHistory();
+  const firstRender = useRef(true);
 
   const handleFecthDetail = async () => {
     const { api, id } = history.location.info;
@@ -15,17 +16,20 @@ const RecipesDetails = () => {
     setDetails(apiReturn);
   };
 
-  const handleFecthDrinks = async () => {
-    // const { api, id } = history.location.info;
-    const apiReturn = await fetchRecipes(2, 'thecocktaildb');
-    setDrinks(apiReturn);
-    console.log(drinks);
+  const handleFecthRecipes = async () => {
+    const { api } = history.location.info;
+    const numberOfRecipes = 6;
+    const apiReturn = await fetchRecipes(numberOfRecipes, api);
+    setRecipes(apiReturn);
   };
 
   useEffect(() => {
-    handleFecthDetail();
-    handleFecthDrinks();
-  }, []);
+    if (firstRender.current) {
+      firstRender.current = false;
+      handleFecthDetail();
+      handleFecthRecipes();
+    }
+  });
   if (details.length === 0) return 'loading';
   return (
     <div>
@@ -85,9 +89,12 @@ const RecipesDetails = () => {
       </div>
       <div>
         <h3>Recommended Recipes</h3>
-        <img src="" alt="" />
-        <p></p>
-        <p></p>
+        {recipes.map((recipe) => (
+          <div key={ recipe.strMeal }>
+            <p>{recipe.strMeal}</p>
+            <img src={ recipe.strMealThumb } alt={ recipe.strMeal } />
+          </div>
+        ))}
       </div>
       <button type="button" data-testid="start-recipe-btn">
         Iniciar Receita
