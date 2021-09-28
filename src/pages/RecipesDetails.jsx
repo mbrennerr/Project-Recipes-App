@@ -10,16 +10,42 @@ const RecipesDetails = () => {
   const history = useHistory();
   const firstRender = useRef(true);
 
+  const path = history.location.pathname;
+  const id = path.match(/\d+/)[0];
+  let api;
+  let api2;
+  let thumb;
+  let recipeThumb;
+  let title;
+  let strRecipe;
+  let category;
+
+  if(path.includes('comidas')) {
+    api = 'themealdb';
+    api2 = 'thecocktaildb';
+    thumb = 'strMealThumb';
+    recipeThumb = 'strDrinkThumb'
+    strRecipe = 'strDrink'
+    title = 'strMeal'
+    category = 'strCategory';
+  } else {
+    api = 'thecocktaildb';
+    api2 = 'themealdb'
+    thumb = 'strDrinkThumb'
+    recipeThumb = 'strMealThumb';
+    strRecipe = 'strMeal'
+    title = 'strDrink'
+    category = 'strAlcoholic'
+  };
+
   const handleFecthDetail = async () => {
-    const { api, id } = history.location.info;
     const apiReturn = await fetchDetails(api, id);
     setDetails(apiReturn);
   };
 
   const handleFecthRecipes = async () => {
-    const { api } = history.location.info;
     const numberOfRecipes = 6;
-    const apiReturn = await fetchRecipes(numberOfRecipes, api);
+    const apiReturn = await fetchRecipes(numberOfRecipes, api2);
     setRecipes(apiReturn);
   };
 
@@ -35,11 +61,11 @@ const RecipesDetails = () => {
     <div>
 
       <div>
-        <img data-testid="recipe-photo" src={ details[0].strMealThumb } alt="img" />
+        <img data-testid="recipe-photo" src={details[0][thumb]} alt="img" />
       </div>
       <div>
         <h1 data-testid="recipe-title">
-          {details[0].strMeal}
+          {details[0][title]}
         </h1>
       </div>
       <div>
@@ -49,7 +75,7 @@ const RecipesDetails = () => {
         <FavoriteButton />
       </div>
       <p data-testid="recipe-category">
-        {details[0].strCategory}
+        {details[0][category]}
       </p>
       <div>
         <h3>
@@ -58,14 +84,20 @@ const RecipesDetails = () => {
         <ul>
           {Object.keys(details[0])
             .filter((key) => key.includes('Ingredient'))
-            .map((ingredient, index) => (
-              details[0][ingredient] !== '' ? (
+            .map((ingredient, index) => {
+              const measure = details[0][`strMeasure${index + 1}`];
+              let stringMeasure =`- ${measure}`
+              if (measure === null) {
+                stringMeasure = '';
+              }
+              return details[0][ingredient] !== '' && details[0][ingredient] !== null ? (
                 <li
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  key={index}
+                  data-testid={`${index}-ingredient-name-and-measure`}
                 >
-                  {`${details[0][ingredient]} - ${details[0][`strMeasure${index + 1}`]}`}
-                </li>) : undefined))}
+                  {`${details[0][ingredient]} ${stringMeasure}`}
+                </li>) : undefined
+            })}
         </ul>
       </div>
       <div>
@@ -73,7 +105,6 @@ const RecipesDetails = () => {
           Instructions
         </h3>
         <p data-testid="instructions">
-          Instructions Text
           {details[0].strInstructions}
         </p>
       </div>
@@ -82,17 +113,17 @@ const RecipesDetails = () => {
           data-testid="video"
           whidth="548"
           height="421"
-          src={ details[0].strYoutube }
+          src={details[0].strYoutube}
           frameBorder="0"
           title="Youtube Video Player"
         />
       </div>
       <div>
         <h3>Recommended Recipes</h3>
-        {recipes.map((recipe) => (
-          <div key={ recipe.strMeal }>
-            <p>{recipe.strMeal}</p>
-            <img src={ recipe.strMealThumb } alt={ recipe.strMeal } />
+        {recipes.map((recipe, index) => (
+          <div data-testid={`${index}-recomendation-card`} key={recipe[strRecipe]}>
+            <p>{recipe[strRecipe]}</p>
+            <img src={recipe[recipeThumb]} alt={recipe[strRecipe]} />
           </div>
         ))}
       </div>
