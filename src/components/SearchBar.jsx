@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/search.css';
 
 // import { useHistory } from "react-router";
 
@@ -26,6 +27,7 @@ const SearchBar = () => {
           name="search"
           data-testid="search-input"
           type="text"
+          className="input-search"
         />
       </div>
       <div>

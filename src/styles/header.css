@@ -5,19 +5,31 @@
 }
 
 .header {
+  align-items: center;
   background-color: lightblue;
   display: flex;
-  justify-content: space-around;
   padding: 10px;
-  top: 0;
+  position: relative;
   width: 100%;
 }
 
 .header button {
   background: none;
   border-style: none;
+  width: fit-content;
 }
 
-.header h3 {
-  margin-top: 3.5px;
+.btn-profile {
+  left: 5%;
+  position: absolute;
+}
+
+.header-title {
+  text-align: center;
+  width: 100%;
+}
+
+.btn-search {
+  position: absolute;
+  right: 5%;
 }
