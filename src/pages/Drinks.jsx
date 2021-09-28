@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -9,11 +9,13 @@ import {
   fetchRecipes,
   fetchRecipesByCategory,
 } from '../services/requests';
+import { enableSearchBar } from '../redux/actions';
 
 function Drinks() {
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
   );
+  const dispatch = useDispatch();
 
   const [drinksList, setDrinksList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
@@ -56,6 +58,12 @@ function Drinks() {
       handleCategoriesList();
     }
   });
+
+  useEffect(() => {
+    return () => {
+      dispatch(enableSearchBar(false))
+    }
+  }, [dispatch]);
 
   return (
     <div>

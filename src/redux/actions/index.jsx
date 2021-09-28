@@ -7,8 +7,8 @@ export const setUserEmail = (email) => ({
   type: LOGIN, email,
 });
 
-export const enableSearchBar = () => ({
-  type: ENABLE_DISABLE_SEARCH_BAR,
+export const enableSearchBar = (change) => ({
+  type: ENABLE_DISABLE_SEARCH_BAR, change,
 });
 
 export const enableButton = (change) => ({

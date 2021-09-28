@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -10,11 +10,13 @@ import {
   fetchRecipesByCategory,
 } from '../services/requests';
 import '../styles/itemCard.css';
+import { enableSearchBar } from '../redux/actions';
 
 const Foods = () => {
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
   );
+  const dispatch = useDispatch();
 
   const [foodsList, setFoodsList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
@@ -58,12 +60,18 @@ const Foods = () => {
     }
   });
 
+  useEffect(() => {
+    return () => {
+      dispatch(enableSearchBar(false))
+    }
+  }, [dispatch]);
+
   return (
     <div>
       <Header />
       {enableSearch && <SearchBar />}
       <div className="category-list">
-        {categoriesList.length > 1 ? (
+      {!enableSearch && (categoriesList.length > 1 ? (
           categoriesList.map(({ strCategory }) => (
             <button
               type="button"
@@ -73,7 +81,7 @@ const Foods = () => {
             >
               {strCategory}
             </button>)))
-          : <p>loading</p>}
+          : <p>loading</p>)}
       </div>
       <div className="item-card-container">
         {foodsList.map(({ idMeal, strMeal, strMealThumb }, index) => (<RecipeCard

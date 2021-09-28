@@ -11,13 +11,16 @@ function Header() {
   const enable = (
     useSelector(({ functionsReducer }) => functionsReducer.enableButton)
   );
+  const enableSearch = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
+  );
 
   const [state, setState] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleClick = () => {
-    dispatch(enableSearchBar());
+    dispatch(enableSearchBar(!enableSearch ));
   };
 
   const historico = history.location.pathname;

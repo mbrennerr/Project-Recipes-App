@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { fetchSearch } from '../services/requests';
 import '../styles/search.css';
-
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 
 const SearchBar = () => {
-  // const history = useHistory();
-  const [state, setState] = useState({
+  const history = useHistory();
+  const initialState = {
     search: '',
     searchCategory: '',
-  });
+  }
+  const [state, setState] = useState(initialState);
 
   const handleChange = ({ target: { name, value } }) => {
     setState({
@@ -16,6 +17,29 @@ const SearchBar = () => {
       [name]: value,
     });
   };
+
+  const handleClick = async () => {
+    const path = history.location.pathname;
+    let api;
+    const query = state.search;
+    const endpoint = state.searchCategory;
+    if(path === '/bebidas') {
+      api = 'thecocktaildb';
+    } else {
+      api = 'themealdb';
+    }
+    if (query.length > 1 && endpoint === "firstLetter") {
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
+    } else if (query !== '' && endpoint !== '') {
+      const results = await fetchSearch(query, endpoint, api);
+      console.log(results);
+    }
+    const radioButtons = document.getElementsByName('searchCategory');
+    radioButtons.forEach(radio => {
+      radio.checked = false;
+    });
+    setState(initialState);
+  }
 
   return (
     <div className="search-bar">
@@ -68,6 +92,7 @@ const SearchBar = () => {
       <button
         type="button"
         data-testid="exec-search-btn"
+        onClick={handleClick}
       >
         Buscar
       </button>

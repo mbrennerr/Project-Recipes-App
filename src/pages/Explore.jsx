@@ -1,15 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
 import '../styles/explore.css';
 
 function Explore() {
-  const enableSearch = (
-    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
-  );
 
   const history = useHistory();
 
@@ -26,7 +21,6 @@ function Explore() {
   return (
     <div>
       <Header />
-      {enableSearch && <SearchBar />}
       <div className="explore-container">
         <button
           type="button"

@@ -9,7 +9,7 @@ const initialState = {
 const functionsReducer = (state = initialState, { type, change }) => {
   switch (type) {
   case ENABLE_DISABLE_SEARCH_BAR:
-    return { ...state, enableSearch: !state.enableSearch };
+    return { ...state, enableSearch: change };
   case ENABLE_BUTTON:
     return { ...state, enableButton: change };
   case DISABLE_BUTTON:
