@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function RecipeCard({ id, name, path, thumb, recipeId, api }) {
+function RecipeCard({ id, name, path, thumb }) {
   return (
     <div data-testid={ `${id}-recipe-card` } className="item-card">
       <Link to={ path }>
@@ -18,8 +18,6 @@ RecipeCard.propTypes = {
   name: PropTypes.string.isRequired,
   thumb: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  recipeId: PropTypes.string.isRequired,
-  api: PropTypes.string.isRequired,
 };
 
 export default RecipeCard;
