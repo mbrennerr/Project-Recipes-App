@@ -11,6 +11,7 @@ function Header() {
   const enable = (
     useSelector(({ functionsReducer }) => functionsReducer.enableButton)
   );
+
   const [state, setState] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
@@ -42,24 +43,30 @@ function Header() {
 
   return (
     <div className="header">
-      <button
-        type="button"
-        onClick={ handleProfile }
-      >
-        <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
-      </button>
-      <h3
-        data-testid="page-title"
-      >
-        {state}
-      </h3>
-      {enable && (
+      <div className="btn-profile">
         <button
           type="button"
-          onClick={ handleClick }
+          onClick={ handleProfile }
         >
-          <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
-        </button>)}
+          <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
+        </button>
+      </div>
+      <div className="header-title">
+        <h3
+          data-testid="page-title"
+        >
+          {state}
+        </h3>
+      </div>
+      <div className="btn-search">
+        { enable && (
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
+          </button>)}
+      </div>
     </div>
   );
 }
