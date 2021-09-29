@@ -21,7 +21,6 @@ function ExploreFoodsArea() {
   const handleCategoriesList = async () => {
     const newCategoriesList = await fetchCategories('themealdb', 'a');
     setCountryList(countryList.concat(newCategoriesList));
-    // console.log(newCategoriesList);
   };
 
   const handleFoodsList = async () => {
@@ -54,10 +53,8 @@ function ExploreFoodsArea() {
     }
   });
 
-  useEffect(() => {
-    return () => {
-      dispatch(enableSearchBar(false))
-    }
+  useEffect(() => () => {
+    dispatch(enableSearchBar(false));
   }, [dispatch]);
 
   return (
@@ -88,7 +85,7 @@ function ExploreFoodsArea() {
           key={ idMeal }
           id={ index }
           name={ strMeal }
-          path={ `${idMeal}` }
+          path={ `/comidas/${idMeal}` }
           thumb={ strMealThumb }
         />))}
       </div>

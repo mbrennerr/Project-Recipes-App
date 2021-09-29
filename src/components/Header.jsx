@@ -20,7 +20,7 @@ function Header() {
   const history = useHistory();
 
   const handleClick = () => {
-    dispatch(enableSearchBar(!enableSearch ));
+    dispatch(enableSearchBar(!enableSearch));
   };
 
   const historico = history.location.pathname;
@@ -31,14 +31,16 @@ function Header() {
     }
   };
 
-  useEffect(() => {
+  const handleSearchButton = () => {
     if (historico === '/comidas' || historico === '/bebidas'
      || historico === '/explorar/comidas/area') {
       dispatch(enableButton(true));
     } else {
       dispatch(enableButton(false));
     }
-  });
+  };
+
+  useEffect(handleSearchButton, [dispatch, historico]);
 
   useEffect(() => {
     setState(getPlaceholder(historico));

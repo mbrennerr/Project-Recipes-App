@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import '../styles/explore.css';
 
 function Explore() {
-
   const history = useHistory();
 
   const handleExplore = ({ target }) => {

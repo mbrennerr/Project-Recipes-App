@@ -32,19 +32,23 @@ export const fetchRecipesByCategory = async (api, category) => {
 
 export const fetchSearch = async (query, endpoint, api) => {
   let response;
-  if (endpoint === "ingredient") {
+  const numberOfRecipes = 12;
+  if (endpoint === 'ingredient') {
     response = await fetch(`https://www.${api}.com/api/json/v1/1/filter.php?i=${query}`);
-  } else if (endpoint === "name") {
+  } else if (endpoint === 'name') {
     response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?s=${query}`);
   } else {
     response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?f=${query}`);
   }
   const result = await response.json();
-  if (api === 'themealdb') {
-    return result.meals;
+
+  if (api === 'themealdb' && result.meals !== null) {
+    return result.meals.slice(0, numberOfRecipes);
+  } if (api === 'thecocktaildb' && result.drinks !== null) {
+    return result.drinks.slice(0, numberOfRecipes);
   }
-  return result.drinks;
-}
+  return null;
+};
 
 export const fetchCountry = async (country) => {
   const numberOfRecipes = 12;

@@ -9,15 +9,16 @@ import {
   fetchRecipes,
   fetchRecipesByCategory,
 } from '../services/requests';
-import { enableSearchBar } from '../redux/actions';
+import { enableSearchBar, setDrinkList } from '../redux/actions';
 
 function Drinks() {
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
   );
+  // const recipeList = useSelector(({ recipes }) => recipes.recipeList);
+  const drinkList = useSelector(({ recipes }) => recipes.drinkList);
   const dispatch = useDispatch();
 
-  const [drinksList, setDrinksList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
   const [filterCategory, setFilterCategory] = useState('');
   const firstRender = useRef(true);
@@ -25,7 +26,8 @@ function Drinks() {
   const handleDrinksList = async () => {
     const limit = 12;
     const newDrinksList = await fetchRecipes(limit, 'thecocktaildb');
-    setDrinksList(newDrinksList);
+    // dispatch(setRecipeList(newDrinksList));
+    dispatch(setDrinkList(newDrinksList));
   };
 
   const handleCategoriesList = async () => {
@@ -34,8 +36,9 @@ function Drinks() {
   };
 
   const handleFetchByCategory = async (category) => {
-    const recipeList = await fetchRecipesByCategory('thecocktaildb', category);
-    setDrinksList(recipeList);
+    const newDrinksList = await fetchRecipesByCategory('thecocktaildb', category);
+    // dispatch(setRecipeList(newDrinksList));
+    dispatch(setDrinkList(newDrinksList));
   };
 
   const handleFilter = ({ target }) => {
@@ -54,15 +57,15 @@ function Drinks() {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
-      handleDrinksList();
       handleCategoriesList();
+      if (drinkList.length === 0) {
+        handleDrinksList();
+      }
     }
   });
 
-  useEffect(() => {
-    return () => {
-      dispatch(enableSearchBar(false))
-    }
+  useEffect(() => () => {
+    dispatch(enableSearchBar(false));
   }, [dispatch]);
 
   return (
@@ -83,7 +86,7 @@ function Drinks() {
           : <p>loading</p>)}
       </div>
       <div className="item-card-container">
-        {drinksList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
+        {drinkList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
           key={ idDrink }
           id={ index }
           name={ strDrink }
