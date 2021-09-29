@@ -59,15 +59,18 @@ function Drinks() {
     if (firstRender.current) {
       firstRender.current = false;
       handleCategoriesList();
-      if (reloadList) {
-        handleDrinksList();
-        console.log('requisição didmount drink');
-        dispatch(setReloadList(false));
-      }
+    }
+  });
+
+  useEffect(() => {
+    if (reloadList) {
+      handleDrinksList();
+      dispatch(setReloadList(false));
     }
   });
 
   useEffect(() => () => {
+    dispatch(setReloadList(true));
     dispatch(enableSearchBar(false));
     dispatch(setDrinkList([]));
   }, [dispatch]);
