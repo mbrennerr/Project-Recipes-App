@@ -40,6 +40,26 @@ export const fetchDetails = async (api, id) => {
 };
 
 // função (slice) usada pra "recortar" o primeiro parametro no caso o primeiro indice do array de buttons;
+export const fetchSearch = async (query, endpoint, api) => {
+  let response;
+  const numberOfRecipes = 12;
+  if (endpoint === 'ingredient') {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/filter.php?i=${query}`);
+  } else if (endpoint === 'name') {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?s=${query}`);
+  } else {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?f=${query}`);
+  }
+  const result = await response.json();
+
+  if (api === 'themealdb' && result.meals !== null) {
+    return result.meals.slice(0, numberOfRecipes);
+  } if (api === 'thecocktaildb' && result.drinks !== null) {
+    return result.drinks.slice(0, numberOfRecipes);
+  }
+  return null;
+};
+
 export const fetchCountry = async (country) => {
   const numberOfRecipes = 12;
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${country}`);
