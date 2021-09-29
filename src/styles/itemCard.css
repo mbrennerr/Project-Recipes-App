@@ -21,18 +21,18 @@
   border-style: solid;
   display: inline-block;
   margin: 5% 0;
+  margin-right: 20px;
   padding: 10px;
   text-align: center;
   width: 160px;
-  margin-right: 20px;
 }
 
 .btn-start {
-  width: 250px;
+  bottom: 0;
   height: 50px;
   left: 15%;
   position: fixed;
-  bottom: 0;
+  width: 250px;
 }
 
 .recomended {
@@ -83,23 +83,23 @@
 .item-card-cont-details {
   align-items: baseline;
   display: block;
+  margin-bottom: 60px;
   overflow: scroll;
   white-space: nowrap;
   width: 100%;
-  margin-bottom: 60px;
 }
 
 .head-details {
-  margin-top: 10px;
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .head-btns button {
   background-color: transparent;
   border-style: none;
-  width: 50px;
   margin-right: 10px;
+  width: 50px;
 }
 
 ::-webkit-scrollbar {
