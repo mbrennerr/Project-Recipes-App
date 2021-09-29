@@ -5,6 +5,7 @@ export const DISABLE_BUTTON = 'DISABLE_BUTTON';
 export const SET_RECIPE_LIST = 'SET_RECIPE_LIST';
 export const SET_DRINK_LIST = 'SET_DRINK_LIST';
 export const SET_FOOD_LIST = 'SET_FOOD_LIST';
+export const SET_RELOAD_LIST = 'SET_RELOAD_LIST';
 
 export const setUserEmail = (email) => ({
   type: LOGIN, email,
@@ -35,4 +36,9 @@ export const setFoodList = (payload) => ({
 export const setDrinkList = (payload) => ({
   type: SET_DRINK_LIST,
   payload,
+});
+
+export const setReloadList = (value) => ({
+  type: SET_RELOAD_LIST,
+  value,
 });

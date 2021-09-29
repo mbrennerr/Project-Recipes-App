@@ -9,4 +9,5 @@ export { default as ExploreFoods } from './ExploreFoods';
 export { default as ExploreDrinks } from './ExploreDrinks';
 export { default as ExploreIngredients } from './ExploreIngredients';
 export { default as ExploreFoodsArea } from './ExploreFoodsArea';
+export { default as IngredientsFilter } from './IngredientsFilter';
 export { default as NotFound } from './NotFound';

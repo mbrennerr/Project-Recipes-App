@@ -9,7 +9,7 @@ import {
   fetchRecipes,
   fetchRecipesByCategory,
 } from '../services/requests';
-import { enableSearchBar, setDrinkList } from '../redux/actions';
+import { enableSearchBar, setDrinkList, setReloadList } from '../redux/actions';
 
 function Drinks() {
   const enableSearch = (
@@ -17,6 +17,7 @@ function Drinks() {
   );
   // const recipeList = useSelector(({ recipes }) => recipes.recipeList);
   const drinkList = useSelector(({ recipes }) => recipes.drinkList);
+  const reloadList = useSelector(({ recipes }) => recipes.reloadList);
   const dispatch = useDispatch();
 
   const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
@@ -58,14 +59,17 @@ function Drinks() {
     if (firstRender.current) {
       firstRender.current = false;
       handleCategoriesList();
-      if (drinkList.length === 0) {
+      if (reloadList) {
         handleDrinksList();
+        console.log('requisição didmount drink');
+        dispatch(setReloadList(false));
       }
     }
   });
 
   useEffect(() => () => {
     dispatch(enableSearchBar(false));
+    dispatch(setDrinkList([]));
   }, [dispatch]);
 
   return (
