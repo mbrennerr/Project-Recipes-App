@@ -1,5 +1,5 @@
 .img-details img {
-  width: 360px;
+  width: 100%;
 }
 
 .item-card {
@@ -12,6 +12,27 @@
   padding: 10px;
   text-align: center;
   width: 160px;
+}
+
+.item-card-recomend {
+  background-color: lightblue;
+  border-color: lightcyan;
+  border-radius: 10px;
+  border-style: solid;
+  display: inline-block;
+  margin: 5% 0;
+  padding: 10px;
+  text-align: center;
+  width: 160px;
+  margin-right: 20px;
+}
+
+.btn-start {
+  width: 250px;
+  height: 50px;
+  left: 15%;
+  position: fixed;
+  bottom: 0;
 }
 
 .recomended {
@@ -31,11 +52,11 @@
   width: 100%;
 }
 
-.item-card img {
+.item-card img, .item-card-recomend img {
   width: 100%;
 }
 
-.item-card h4 {
+.item-card h4, .item-card-recomend h4 {
   align-items: center;
   display: flex;
   flex-grow: 1;
@@ -65,6 +86,20 @@
   overflow: scroll;
   white-space: nowrap;
   width: 100%;
+  margin-bottom: 60px;
+}
+
+.head-details {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.head-btns button {
+  background-color: transparent;
+  border-style: none;
+  width: 50px;
+  margin-right: 10px;
 }
 
 ::-webkit-scrollbar {

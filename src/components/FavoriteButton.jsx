@@ -1,4 +1,6 @@
 import React from 'react';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteButton() {
   return (
@@ -6,7 +8,7 @@ function FavoriteButton() {
       type="button"
       data-testid="favorite-btn"
     >
-      Favoritos
+      <img src={ whiteHeartIcon } alt="share" />
     </button>
   );
 }

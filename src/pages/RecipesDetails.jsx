@@ -8,8 +8,14 @@ import '../styles/itemCard.css';
 const RecipesDetails = () => {
   const [details, setDetails] = useState([]);
   const [recipes, setRecipes] = useState([]);
+  const [loadMessage, setLoadMessage] = useState(false);
+  const [recipeButtonText, setRecipeButtonText] = useState('Iniciar Receita');
   const history = useHistory();
   const firstRender = useRef(true);
+
+  const handleClick = () => {
+    setRecipeButtonText('Continuar Receita');
+  };
 
   const path = history.location.pathname;
   const id = path.match(/\d+/)[0];
@@ -59,27 +65,36 @@ const RecipesDetails = () => {
   });
   if (details.length === 0) return 'loading';
   const player = details[0].strYoutube;
-  const change = player.replace('watch?v=', 'embed/');
+  // console.log(player);
+  let change;
+  if (path.includes('comidas')) {
+    change = player.replace('watch?v=', 'embed/');
+  }
+  // if (path.includes('bebidas')) {
+  //   document.getElementById('teste').remove();
+  //   element.parentNode.removeChild(element);
+  // }
   return (
     <div>
 
       <div className="img-details">
         <img data-testid="recipe-photo" src={ details[0][thumb] } alt="img" />
       </div>
-      <div>
-        <h1 data-testid="recipe-title">
-          {details[0][title]}
-        </h1>
+      <div className="head-details">
+        <div>
+          <h1 data-testid="recipe-title">
+            {details[0][title]}
+          </h1>
+          <p data-testid="recipe-category">
+            {details[0][category]}
+          </p>
+        </div>
+        <div className="head-btns">
+          <ShareButton setLoadMessage={ setLoadMessage } />
+          <FavoriteButton />
+          <p hidden={ !loadMessage }>Link copiado!</p>
+        </div>
       </div>
-      <div>
-        <ShareButton />
-      </div>
-      <div>
-        <FavoriteButton />
-      </div>
-      <p data-testid="recipe-category">
-        {details[0][category]}
-      </p>
       <div>
         <h3>
           Ingredients
@@ -111,34 +126,43 @@ const RecipesDetails = () => {
           {details[0].strInstructions}
         </p>
       </div>
-      <div className="player-video">
-        <iframe
-          data-testid="video"
-          whidth="360"
-          height="300"
-          src={ change }
-          frameBorder="0"
-          title="Youtube Video Player"
-        />
-      </div>
+      {path.includes('comidas')
+      && (
+        <div className="player-video" id="teste">
+          <iframe
+            data-testid="video"
+            whidth="360"
+            height="300"
+            src={ change }
+            frameBorder="0"
+            title="Youtube Video Player"
+          />
+        </div>
+      )}
       <div className="recomended">
         <h3>Recommended Recipes</h3>
         <div className="item-card-cont-details">
           {recipes.map((recipe, index) => (
             <div
-              className="item-card"
+              className="item-card-recomend"
               data-testid={ `${index}-recomendation-card` }
               key={ recipe[strRecipe] }
             >
-              <p>{recipe[strRecipe]}</p>
+              <p data-testid={ `${index}-recomendation-title` }>{recipe[strRecipe]}</p>
               <img src={ recipe[recipeThumb] } alt={ recipe[strRecipe] } />
             </div>
           ))}
         </div>
-        <button type="button" data-testid="start-recipe-btn">
-          Iniciar Receita
+      </div>
+      <div className="btn-start-div">
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ handleClick }
+          className="btn-start"
+        >
+          { recipeButtonText }
         </button>
-
       </div>
     </div>
   );
