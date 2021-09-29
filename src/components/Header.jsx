@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import { enableSearchBar, enableButton, disableButton } from '../redux/actions';
+import { enableSearchBar, enableButton } from '../redux/actions';
 import '../styles/header.css';
 import getPlaceholder from '../utils/getPlaceholder';
 
@@ -11,18 +11,16 @@ function Header() {
   const enable = (
     useSelector(({ functionsReducer }) => functionsReducer.enableButton)
   );
-
-  // const enable1 = (
-  //   useSelector(({ functionsReducer }) => functionsReducer.disableButton)
-  // );
+  const enableSearch = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
+  );
 
   const [state, setState] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleClick = () => {
-    dispatch(enableSearchBar());
-    dispatch(disableButton());
+    dispatch(enableSearchBar(!enableSearch));
   };
 
   const historico = history.location.pathname;
@@ -33,14 +31,16 @@ function Header() {
     }
   };
 
-  useEffect(() => {
+  const handleSearchButton = () => {
     if (historico === '/comidas' || historico === '/bebidas'
      || historico === '/explorar/comidas/area') {
       dispatch(enableButton(true));
     } else {
       dispatch(enableButton(false));
     }
-  });
+  };
+
+  useEffect(handleSearchButton, [dispatch, historico]);
 
   useEffect(() => {
     setState(getPlaceholder(historico));
@@ -64,7 +64,7 @@ function Header() {
         </h3>
       </div>
       <div className="btn-search">
-        {enable && (
+        { enable && (
           <button
             type="button"
             onClick={ handleClick }

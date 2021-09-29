@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -10,21 +10,23 @@ import {
   fetchRecipesByCategory,
 } from '../services/requests';
 import '../styles/itemCard.css';
+import { enableSearchBar, setFoodList, setReloadList } from '../redux/actions';
 
 const Foods = () => {
+  const firstRender = useRef(true);
+  const dispatch = useDispatch();
+  const foodList = useSelector(({ recipes }) => recipes.foodList);
+  const reloadList = useSelector(({ recipes }) => recipes.reloadList);
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
   );
-
-  const [foodsList, setFoodsList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
   const [filterCategory, setFilterCategory] = useState('');
-  const firstRender = useRef(true);
 
   const handleFoodsList = async () => {
     const limit = 12;
     const newFoodsList = await fetchRecipes(limit, 'themealdb');
-    setFoodsList(newFoodsList);
+    dispatch(setFoodList(newFoodsList));
   };
 
   const handleCategoriesList = async () => {
@@ -33,8 +35,8 @@ const Foods = () => {
   };
 
   const handleFetchByCategory = async (category) => {
-    const recipeList = await fetchRecipesByCategory('themealdb', category);
-    setFoodsList(recipeList);
+    const newFoodsList = await fetchRecipesByCategory('themealdb', category);
+    dispatch(setFoodList(newFoodsList));
   };
 
   const handleFilter = ({ target }) => {
@@ -53,17 +55,26 @@ const Foods = () => {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
-      handleFoodsList();
       handleCategoriesList();
+      if (reloadList) {
+        handleFoodsList();
+        console.log('requisição didmount food');
+        dispatch(setReloadList(false));
+      }
     }
   });
+
+  useEffect(() => () => {
+    dispatch(enableSearchBar(false));
+    dispatch(setFoodList([]));
+  }, [dispatch]);
 
   return (
     <div>
       <Header />
       {enableSearch && <SearchBar />}
       <div className="category-list">
-        {categoriesList.length > 1 ? (
+        {!enableSearch && (categoriesList.length > 1 ? (
           categoriesList.map(({ strCategory }) => (
             <button
               type="button"
@@ -73,10 +84,10 @@ const Foods = () => {
             >
               {strCategory}
             </button>)))
-          : <p>loading</p>}
+          : <p>loading</p>)}
       </div>
       <div className="item-card-container">
-        {foodsList.map(({ idMeal, strMeal, strMealThumb }, index) => (<RecipeCard
+        {foodList.map(({ idMeal, strMeal, strMealThumb }, index) => (<RecipeCard
           key={ idMeal }
           id={ index }
           name={ strMeal }

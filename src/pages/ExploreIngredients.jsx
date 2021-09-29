@@ -34,14 +34,12 @@ function ExploreIngredients() {
 
   return (
     <div>
-      {console.log('exploreIngre')}
       <Header />
       <div className="item-card-container">
         {ingredientsList.map((ingredient, index) => (<IngredientCard
           key={ ingredient[`strIngredient${apiString}`] }
           id={ index }
           name={ ingredient[`strIngredient${apiString}`] }
-          path={ `ingredientes/${ingredient[`strIngredient${apiString}`]}` }
           thumb={ `https://www.${api}.com/images/ingredients/${ingredient[`strIngredient${apiString}`]}-Small.png` }
         />))}
       </div>

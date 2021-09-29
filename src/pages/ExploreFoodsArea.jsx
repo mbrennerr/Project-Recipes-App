@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
+import SearchBar from '../components/SearchBar';
+import { enableSearchBar } from '../redux/actions';
 import { fetchCategories, fetchRecipes, fetchCountry } from '../services/requests';
 
 function ExploreFoodsArea() {
@@ -10,10 +13,14 @@ function ExploreFoodsArea() {
   const [filterCountry, setFilterCountry] = useState('');
   const firstRender = useRef(true);
 
+  const enableSearch = (
+    useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
+  );
+  const dispatch = useDispatch();
+
   const handleCategoriesList = async () => {
     const newCategoriesList = await fetchCategories('themealdb', 'a');
     setCountryList(countryList.concat(newCategoriesList));
-    // console.log(newCategoriesList);
   };
 
   const handleFoodsList = async () => {
@@ -46,9 +53,14 @@ function ExploreFoodsArea() {
     }
   });
 
+  useEffect(() => () => {
+    dispatch(enableSearchBar(false));
+  }, [dispatch]);
+
   return (
     <div>
       <Header />
+      {enableSearch && <SearchBar />}
       <div className="select-option">
         <select
           name=""
@@ -73,7 +85,7 @@ function ExploreFoodsArea() {
           key={ idMeal }
           id={ index }
           name={ strMeal }
-          path={ `${idMeal}` }
+          path={ `/comidas/${idMeal}` }
           thumb={ strMealThumb }
         />))}
       </div>

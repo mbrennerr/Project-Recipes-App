@@ -39,6 +39,26 @@ export const fetchIngredients = async (limit, api) => {
   return result.drinks.slice(0, limit);
 };
 
+export const fetchSearch = async (query, endpoint, api) => {
+  let response;
+  const numberOfRecipes = 12;
+  if (endpoint === 'ingredient') {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/filter.php?i=${query}`);
+  } else if (endpoint === 'name') {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?s=${query}`);
+  } else {
+    response = await fetch(`https://www.${api}.com/api/json/v1/1/search.php?f=${query}`);
+  }
+  const result = await response.json();
+
+  if (api === 'themealdb' && result.meals !== null) {
+    return result.meals.slice(0, numberOfRecipes);
+  } if (api === 'thecocktaildb' && result.drinks !== null) {
+    return result.drinks.slice(0, numberOfRecipes);
+  }
+  return null;
+};
+
 export const fetchCountry = async (country) => {
   const numberOfRecipes = 12;
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${country}`);
@@ -54,7 +74,6 @@ export const fetchIngredientsFilter = async (limit, api, ingredient) => {
   const result = await response.json();
   if (api === 'themealdb') {
     return result.meals.slice(0, limit);
-  } else {
-    return result.drinks.slice(0, limit);
   }
+  return result.drinks.slice(0, limit);
 };
