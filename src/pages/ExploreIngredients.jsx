@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import IngredientCard from '../components/IngredientCard';
@@ -6,54 +6,42 @@ import { fetchIngredients } from '../services/requests';
 
 function ExploreIngredients() {
   const [ingredientsList, setIngredientsList] = useState([]);
+  const firstRender = useRef(true);
   const { pathname } = window.location;
 
-  const handleIngredientsFoodList = async () => {
-    const limit = 12;
-    const IngredientsList = await fetchIngredients(limit, 'themealdb');
-    setIngredientsList(IngredientsList);
-  };
+  let api;
+  let apiString;
+  if (pathname.includes('comidas')) {
+    api = 'themealdb';
+    apiString = '';
+  } else {
+    api = 'thecocktaildb';
+    apiString = '1';
+  }
 
-  const handleIngredientsDrinkList = async () => {
+  const handleIngredientsList = async () => {
     const limit = 12;
-    const IngredientsList = await fetchIngredients(limit, 'thecocktaildb');
+    const IngredientsList = await fetchIngredients(limit, api);
     setIngredientsList(IngredientsList);
   };
 
   useEffect(() => {
-    if (pathname === '/explorar/comidas/ingredientes') {
-      handleIngredientsFoodList();
-    } else {
-      handleIngredientsDrinkList();
+    if (firstRender.current) {
+      firstRender.current = false;
+      handleIngredientsList();
     }
-  }, [pathname]);
+  });
 
-  if (pathname === '/explorar/comidas/ingredientes') {
-    return (
-      <div>
-        <Header />
-        <div className="item-card-container">
-          {ingredientsList.map(({ strIngredient }, index) => (<IngredientCard
-            key={ strIngredient }
-            id={ index }
-            name={ strIngredient }
-            path={ `ingredientes/${strIngredient}` }
-            thumb={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
-          />))}
-        </div>
-        <Footer />
-      </div>
-    );
-  } return (
+  return (
     <div>
       <Header />
       <div className="item-card-container">
-        {ingredientsList.map(({ strIngredient1 }, index) => (<IngredientCard
-          key={ strIngredient1 }
+        {ingredientsList.map((ingredient, index) => (<IngredientCard
+          key={ ingredient[`strIngredient${apiString}`] }
           id={ index }
-          name={ strIngredient1 }
-          path={ `ingredientes/${strIngredient1}` }
-          thumb={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png` }
+          name={ ingredient[`strIngredient${apiString}`] }
+          path={ `ingredientes/${ingredient[`strIngredient${apiString}`]}` }
+          thumb={ `https://www.${api}.com/images/ingredients/${ingredient[`strIngredient${apiString}`]}-Small.png` }
         />))}
       </div>
       <Footer />
