@@ -34,6 +34,7 @@ function ExploreIngredients() {
 
   return (
     <div>
+      {console.log('exploreIngre')}
       <Header />
       <div className="item-card-container">
         {ingredientsList.map((ingredient, index) => (<IngredientCard

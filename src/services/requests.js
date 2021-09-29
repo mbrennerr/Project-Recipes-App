@@ -54,6 +54,7 @@ export const fetchIngredientsFilter = async (limit, api, ingredient) => {
   const result = await response.json();
   if (api === 'themealdb') {
     return result.meals.slice(0, limit);
+  } else {
+    return result.drinks.slice(0, limit);
   }
-  return result.drinks.slice(0, limit);
 };

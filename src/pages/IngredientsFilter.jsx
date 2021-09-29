@@ -27,6 +27,7 @@ const IngredientsFilter = () => {
 
   const handleRecipeList = async () => {
     const newRecList = await fetchIngredientsFilter(limit, api, ingredient);
+    console.log(30);
     setRecipeList(newRecList);
   };
 
@@ -40,6 +41,7 @@ const IngredientsFilter = () => {
 
   return (
     <div>
+      {console.log('filter')}
       <Header />
       <div className="item-card-container">
         {recipeList.map((recipe, index) => (<RecipeCard
