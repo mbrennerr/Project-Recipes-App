@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
 import ShareButton from '../components/ShareButton';
 import { fetchDetails, fetchRecipes } from '../services/requests';
+import '../styles/itemCard.css';
 
 const RecipesDetails = () => {
   const [details, setDetails] = useState([]);
@@ -57,10 +58,12 @@ const RecipesDetails = () => {
     }
   });
   if (details.length === 0) return 'loading';
+  const player = details[0].strYoutube;
+  const change = player.replace('watch?v=', 'embed/');
   return (
     <div>
 
-      <div>
+      <div className="img-details">
         <img data-testid="recipe-photo" src={ details[0][thumb] } alt="img" />
       </div>
       <div>
@@ -108,29 +111,35 @@ const RecipesDetails = () => {
           {details[0].strInstructions}
         </p>
       </div>
-      <div>
+      <div className="player-video">
         <iframe
           data-testid="video"
-          whidth="548"
-          height="421"
-          src={ details[0].strYoutube }
+          whidth="360"
+          height="300"
+          src={ change }
           frameBorder="0"
           title="Youtube Video Player"
         />
       </div>
-      <div>
+      <div className="recomended">
         <h3>Recommended Recipes</h3>
-        {recipes.map((recipe, index) => (
-          <div data-testid={ `${index}-recomendation-card` } key={ recipe[strRecipe] }>
-            <p>{recipe[strRecipe]}</p>
-            <img src={ recipe[recipeThumb] } alt={ recipe[strRecipe] } />
-          </div>
-        ))}
-      </div>
-      <button type="button" data-testid="start-recipe-btn">
-        Iniciar Receita
-      </button>
+        <div className="item-card-cont-details">
+          {recipes.map((recipe, index) => (
+            <div
+              className="item-card"
+              data-testid={ `${index}-recomendation-card` }
+              key={ recipe[strRecipe] }
+            >
+              <p>{recipe[strRecipe]}</p>
+              <img src={ recipe[recipeThumb] } alt={ recipe[strRecipe] } />
+            </div>
+          ))}
+        </div>
+        <button type="button" data-testid="start-recipe-btn">
+          Iniciar Receita
+        </button>
 
+      </div>
     </div>
   );
 };
