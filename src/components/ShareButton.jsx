@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
@@ -25,5 +26,9 @@ function ShareButton({ setLoadMessage }) {
     </button>
   );
 }
+
+ShareButton.propTypes = {
+  setLoadMessage: PropTypes.func,
+}.isRequired;
 
 export default ShareButton;

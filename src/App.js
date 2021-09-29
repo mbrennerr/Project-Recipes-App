@@ -5,9 +5,8 @@ import {
   Drinks, Explore, FavoriteRecipes,
   Foods, Login, Profile, RecipesDone, ExploreFoods,
   ExploreDrinks, ExploreIngredients, NotFound,
-  RecipesDetails, ExploreFoodsArea, IngredientsFilter
+  RecipesDetails, ExploreFoodsArea, IngredientsFilter,
 } from './pages';
-
 
 function App() {
   return (
