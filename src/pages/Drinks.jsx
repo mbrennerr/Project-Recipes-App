@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -9,13 +9,16 @@ import {
   fetchRecipes,
   fetchRecipesByCategory,
 } from '../services/requests';
+import { enableSearchBar, setDrinkList } from '../redux/actions';
 
 function Drinks() {
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
   );
+  // const recipeList = useSelector(({ recipes }) => recipes.recipeList);
+  const drinkList = useSelector(({ recipes }) => recipes.drinkList);
+  const dispatch = useDispatch();
 
-  const [drinksList, setDrinksList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([{ strCategory: 'All' }]);
   const [filterCategory, setFilterCategory] = useState('');
   const firstRender = useRef(true);
@@ -23,7 +26,8 @@ function Drinks() {
   const handleDrinksList = async () => {
     const limit = 12;
     const newDrinksList = await fetchRecipes(limit, 'thecocktaildb');
-    setDrinksList(newDrinksList);
+    // dispatch(setRecipeList(newDrinksList));
+    dispatch(setDrinkList(newDrinksList));
   };
 
   const handleCategoriesList = async () => {
@@ -32,8 +36,9 @@ function Drinks() {
   };
 
   const handleFetchByCategory = async (category) => {
-    const recipeList = await fetchRecipesByCategory('thecocktaildb', category);
-    setDrinksList(recipeList);
+    const newDrinksList = await fetchRecipesByCategory('thecocktaildb', category);
+    // dispatch(setRecipeList(newDrinksList));
+    dispatch(setDrinkList(newDrinksList));
   };
 
   const handleFilter = ({ target }) => {
@@ -52,10 +57,16 @@ function Drinks() {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
-      handleDrinksList();
       handleCategoriesList();
+      if (drinkList.length === 0) {
+        handleDrinksList();
+      }
     }
   });
+
+  useEffect(() => () => {
+    dispatch(enableSearchBar(false));
+  }, [dispatch]);
 
   return (
     <div>
@@ -75,7 +86,7 @@ function Drinks() {
           : <p>loading</p>)}
       </div>
       <div className="item-card-container">
-        {drinksList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
+        {drinkList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
           key={ idDrink }
           id={ index }
           name={ strDrink }
