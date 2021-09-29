@@ -10,12 +10,13 @@ import {
   fetchRecipesByCategory,
 } from '../services/requests';
 import '../styles/itemCard.css';
-import { enableSearchBar, setFoodList } from '../redux/actions';
+import { enableSearchBar, setFoodList, setReloadList } from '../redux/actions';
 
 const Foods = () => {
   const firstRender = useRef(true);
   const dispatch = useDispatch();
   const foodList = useSelector(({ recipes }) => recipes.foodList);
+  const reloadList = useSelector(({ recipes }) => recipes.reloadList);
   const enableSearch = (
     useSelector(({ functionsReducer }) => functionsReducer.enableSearch)
   );
@@ -55,14 +56,17 @@ const Foods = () => {
     if (firstRender.current) {
       firstRender.current = false;
       handleCategoriesList();
-      if (foodList.length === 0) {
+      if (reloadList) {
         handleFoodsList();
+        console.log('requisição didmount food');
+        dispatch(setReloadList(false));
       }
     }
   });
 
   useEffect(() => () => {
     dispatch(enableSearchBar(false));
+    dispatch(setFoodList([]));
   }, [dispatch]);
 
   return (
