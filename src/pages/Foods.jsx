@@ -56,15 +56,18 @@ const Foods = () => {
     if (firstRender.current) {
       firstRender.current = false;
       handleCategoriesList();
-      if (reloadList) {
-        handleFoodsList();
-        console.log('requisição didmount food');
-        dispatch(setReloadList(false));
-      }
+    }
+  });
+
+  useEffect(() => {
+    if (reloadList) {
+      handleFoodsList();
+      dispatch(setReloadList(false));
     }
   });
 
   useEffect(() => () => {
+    dispatch(setReloadList(true));
     dispatch(enableSearchBar(false));
     dispatch(setFoodList([]));
   }, [dispatch]);

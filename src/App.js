@@ -33,16 +33,6 @@ function App() {
       <Route exact path="/Perfil" component={ Profile } />
       <Route exact path="/receitas-feitas" component={ RecipesDone } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
-      <Route
-        exact
-        path="/explorar/bebidas/ingredientes/:id"
-        component={ IngredientsFilter }
-      />
-      <Route
-        exact
-        path="/explorar/comidas/ingredientes/:id"
-        component={ IngredientsFilter }
-      />
       <Route component={ NotFound } />
     </Switch>
 
