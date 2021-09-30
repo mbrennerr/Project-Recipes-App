@@ -102,6 +102,11 @@
   width: 50px;
 }
 
+.head-btns img {
+  height: 26px;
+  width: 26px;
+}
+
 ::-webkit-scrollbar {
   width: 0.1px;
 }

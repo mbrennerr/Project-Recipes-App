@@ -2,20 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
 import ShareButton from '../components/ShareButton';
+import StartRecipesBtn from '../components/StartRecipesBtn';
 import { fetchDetails, fetchRecipes } from '../services/requests';
 import '../styles/itemCard.css';
 
-const RecipesDetails = () => {
+function RecipesDetails() {
   const [details, setDetails] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [loadMessage, setLoadMessage] = useState(false);
-  const [recipeButtonText, setRecipeButtonText] = useState('Iniciar Receita');
   const history = useHistory();
   const firstRender = useRef(true);
-
-  const handleClick = () => {
-    setRecipeButtonText('Continuar Receita');
-  };
 
   const path = history.location.pathname;
   const id = path.match(/\d+/)[0];
@@ -26,6 +22,7 @@ const RecipesDetails = () => {
   let title;
   let strRecipe;
   let category;
+  let idItem;
 
   if (path.includes('comidas')) {
     api = 'themealdb';
@@ -35,6 +32,7 @@ const RecipesDetails = () => {
     strRecipe = 'strDrink';
     title = 'strMeal';
     category = 'strCategory';
+    idItem = 'idMeal';
   } else {
     api = 'thecocktaildb';
     api2 = 'themealdb';
@@ -43,6 +41,7 @@ const RecipesDetails = () => {
     strRecipe = 'strMeal';
     title = 'strDrink';
     category = 'strAlcoholic';
+    idItem = 'idDrink';
   }
 
   const handleFecthDetail = async () => {
@@ -63,17 +62,16 @@ const RecipesDetails = () => {
       handleFecthRecipes();
     }
   });
+
   if (details.length === 0) return 'loading';
   const player = details[0].strYoutube;
-  // console.log(player);
   let change;
   if (path.includes('comidas')) {
     change = player.replace('watch?v=', 'embed/');
   }
-  // if (path.includes('bebidas')) {
-  //   document.getElementById('teste').remove();
-  //   element.parentNode.removeChild(element);
-  // }
+
+  const idUrl = details[0][idItem];
+
   return (
     <div>
 
@@ -155,16 +153,9 @@ const RecipesDetails = () => {
         </div>
       </div>
       <div className="btn-start-div">
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-          onClick={ handleClick }
-          className="btn-start"
-        >
-          { recipeButtonText }
-        </button>
+        <StartRecipesBtn idUrl={ idUrl } />
       </div>
     </div>
   );
-};
+}
 export default RecipesDetails;

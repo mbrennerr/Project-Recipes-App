@@ -5,7 +5,7 @@ import {
   Drinks, Explore, FavoriteRecipes,
   Foods, Login, Profile, RecipesDone, ExploreFoods,
   ExploreDrinks, ExploreIngredients, NotFound,
-  RecipesDetails, ExploreFoodsArea, IngredientsFilter,
+  RecipesDetails, ExploreFoodsArea, IngredientsFilter, RecipesInProgress,
 } from './pages';
 
 function App() {
@@ -42,6 +42,16 @@ function App() {
         exact
         path="/explorar/comidas/ingredientes/:id"
         component={ IngredientsFilter }
+      />
+      <Route
+        exact
+        path="/comidas/:id/in-progress"
+        component={ RecipesInProgress }
+      />
+      <Route
+        exact
+        path="/bebidas/:id/in-progress"
+        component={ RecipesInProgress }
       />
       <Route component={ NotFound } />
     </Switch>

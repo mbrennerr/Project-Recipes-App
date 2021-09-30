@@ -7,8 +7,6 @@ const copy = require('clipboard-copy');
 function ShareButton({ setLoadMessage }) {
   const shareRecipe = () => {
     setLoadMessage(true);
-    // console.log(window.location.host + window.location.pathname);
-    // const link = 'http://localhost:3000/';
     copy(window.location.href);
     const TIME = 2000;
     setTimeout(() => {
