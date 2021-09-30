@@ -5,7 +5,7 @@ import {
   Drinks, Explore, FavoriteRecipes,
   Foods, Login, Profile, RecipesDone, ExploreFoods,
   ExploreDrinks, ExploreIngredients, NotFound,
-  RecipesDetails, ExploreFoodsArea, IngredientsFilter, RecipesInProgress,
+  RecipesDetails, ExploreFoodsArea, RecipesInProgress,
 } from './pages';
 
 function App() {
