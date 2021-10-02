@@ -89,7 +89,7 @@ function RecipesDetails() {
         </div>
         <div className="head-btns">
           <ShareButton setLoadMessage={ setLoadMessage } />
-          <FavoriteButton />
+          <FavoriteButton details={ details[0] } />
           <p hidden={ !loadMessage }>Link copiado!</p>
         </div>
       </div>
