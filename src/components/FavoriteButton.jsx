@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -36,42 +36,52 @@ function FavoriteButton(details) {
 
   const favorite = {
     id,
-    name,
-    category,
-    alcool,
-    img,
     type,
     area,
+    category,
+    alcoholicOrNot: alcool,
+    name,
+    image: img,
   };
 
-  const arr = [];
+  useEffect(() => {
+    if (localStorage.favoriteRecipes) {
+      const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const isFavorite = recipes.some((element) => element.id === id);
+      if (isFavorite) {
+        setImage(blackHeartIcon);
+      }
+    }
+  }, [id]);
 
   const handleFavorite = () => {
     if (image === blackHeartIcon) {
       setImage(whiteHeartIcon);
+      const favItem = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const favFiltered = favItem.filter((element) => element.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favFiltered));
+      localStorage.setItem('img', whiteHeartIcon);
     } if (image === whiteHeartIcon) {
       setImage(blackHeartIcon);
-      if (!localStorage.getItem('favoriteRecipe')) {
-        localStorage.setItem('favoriteRecipe', JSON.stringify(favorite));
+      localStorage.setItem('img', blackHeartIcon);
+      if (!localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favorite]));
       } else {
-        const exist = JSON.parse(localStorage.getItem('favoriteRecipe'));
-        console.log(exist, 'exist');
-        arr.push(exist, favorite);
-        // arr.push(favorite);
-        console.log(arr, 'arr');
-        // localStorage.setItem('favoriteRecipe', JSON.stringify(arr));
+        const exist = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const arr = [...exist, favorite];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(arr));
       }
     }
   };
 
   return (
-    <button
-      type="button"
+    <input
+      type="image"
       data-testid="favorite-btn"
       onClick={ handleFavorite }
-    >
-      <img src={ image } alt="share" />
-    </button>
+      src={ image }
+      alt="favorite"
+    />
   );
 }
 

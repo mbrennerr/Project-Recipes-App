@@ -84,9 +84,9 @@
   display: block;
   margin-bottom: 60px;
   overflow: scroll;
+  overflow-x: scroll;
   white-space: nowrap;
   width: 100%;
-  overflow-x: scroll;
 }
 
 .head-details {
@@ -95,14 +95,14 @@
   margin-top: 10px;
 }
 
-.head-btns button {
+.head-btns button, .head-btns input {
   background-color: transparent;
   border-style: none;
   margin-right: 10px;
   width: 50px;
 }
 
-.head-btns img {
+.head-btns img, .head-btns input {
   height: 26px;
   width: 26px;
 }
