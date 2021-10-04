@@ -153,7 +153,7 @@ function RecipesDetails() {
         </div>
       </div>
       <div className="btn-start-div">
-        <StartRecipesBtn idUrl={ idUrl } />
+        <StartRecipesBtn idUrl={ idUrl } details={ details[0] } />
       </div>
     </div>
   );

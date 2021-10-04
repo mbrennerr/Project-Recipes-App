@@ -15,10 +15,9 @@ function StartRecipesBtn({ idUrl }) {
   };
 
   useEffect(() => {
-    if (localStorage.inProgress) {
-      const recipes = JSON.parse(localStorage.getItem('inProgress'));
+    if (localStorage.inProgressRecipes) {
+      const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const isInProgress = recipes.some((element) => element.id === id);
-      console.log(isInProgress, 'isInProgress');
       if (isInProgress) {
         setRecipeButtonText(continueRecipe);
       }
@@ -27,12 +26,12 @@ function StartRecipesBtn({ idUrl }) {
 
   const handleClick = () => {
     setRecipeButtonText(continueRecipe);
-    if (!localStorage.getItem('inProgress')) {
-      localStorage.setItem('inProgress', JSON.stringify([doing]));
+    if (!localStorage.getItem('inProgressRecipes')) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify([doing]));
     } else {
-      const exist = JSON.parse(localStorage.getItem('inProgress'));
+      const exist = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const arr = [...exist, doing];
-      localStorage.setItem('inProgress', JSON.stringify(arr));
+      localStorage.setItem('inProgressRecipes', JSON.stringify(arr));
     }
     if (path.includes('comidas')) {
       history.push(`/comidas/${idUrl}/in-progress`);
