@@ -95,9 +95,11 @@ function Drinks() {
       <div className="item-card-container">
         {drinkList.map(({ idDrink, strDrink, strDrinkThumb }, index) => (<RecipeCard
           key={ idDrink }
+          recipeId={ idDrink }
           id={ index }
           name={ strDrink }
           path={ `bebidas/${idDrink}` }
+          api="thecocktaildb"
           thumb={ strDrinkThumb }
         />))}
       </div>

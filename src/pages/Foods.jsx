@@ -92,9 +92,11 @@ const Foods = () => {
       <div className="item-card-container">
         {foodList.map(({ idMeal, strMeal, strMealThumb }, index) => (<RecipeCard
           key={ idMeal }
+          recipeId={ idMeal }
           id={ index }
           name={ strMeal }
           path={ `comidas/${idMeal}` }
+          api="themealdb"
           thumb={ strMealThumb }
         />))}
       </div>
