@@ -54,7 +54,7 @@ function StartRecipesBtn({ idUrl }) {
 }
 
 StartRecipesBtn.propTypes = {
-  idUrl: PropTypes.number.isRequired,
+  idUrl: PropTypes.string.isRequired,
 };
 
 export default StartRecipesBtn;
