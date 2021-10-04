@@ -62,8 +62,8 @@ function RecipesDetails() {
       handleFecthRecipes();
     }
   });
-
-  if (details.length === 0) return 'loading';
+  // console.log(details);
+  if (details === undefined || details.length === 0) return 'loading';
   const player = details[0].strYoutube;
   let change;
   if (path.includes('comidas')) {
