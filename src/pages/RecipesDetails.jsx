@@ -85,7 +85,11 @@ function RecipesDetails() {
           <p hidden={ !loadMessage }>Link copiado!</p>
         </div>
       </div>
-      <IngredientsList progress={ false } testid="ingredient-name-and-measure" list={ listOfIngredients } />
+      <IngredientsList
+        progress={ false }
+        testid="ingredient-name-and-measure"
+        list={ listOfIngredients }
+      />
       <RecipeInstructions instructions={ details[0].strInstructions } />
       {path.includes('comidas')
         && (
