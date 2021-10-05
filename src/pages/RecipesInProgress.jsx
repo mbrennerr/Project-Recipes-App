@@ -28,25 +28,9 @@ function RecipesInProgress() {
   let tags;
 
   if (path.includes('comidas')) {
-    idItem = 'idMeal';
     api = 'themealdb';
-    thumb = 'strMealThumb';
-    title = 'strMeal';
-    category = 'strCategory';
-    area = 'strArea';
-    type = 'comida';
-    cat = 'strCategory';
-    tags = [details[0].strTags];
   } else {
-    idItem = 'idDrink';
     api = 'thecocktaildb';
-    thumb = 'strDrinkThumb';
-    title = 'strDrink';
-    category = 'strAlcoholic';
-    cat = 'strCategory';
-    area = '';
-    type = 'bebida';
-    tags = [];
   }
 
   const handleFecthDetails = async () => {
@@ -63,6 +47,26 @@ function RecipesInProgress() {
 
   if (details.length === 0) return 'loading';
   const listOfIngredients = handleIngredientsList(details[0]);
+
+  if (path.includes('comidas')) {
+    idItem = 'idMeal';
+    thumb = 'strMealThumb';
+    title = 'strMeal';
+    category = 'strCategory';
+    area = 'strArea';
+    type = 'comida';
+    cat = 'strCategory';
+    tags = [details[0].strTags];
+  } else {
+    idItem = 'idDrink';
+    thumb = 'strDrinkThumb';
+    title = 'strDrink';
+    category = 'strAlcoholic';
+    cat = 'strCategory';
+    area = '';
+    type = 'bebida';
+    tags = [];
+  }
 
   // a data eu peguei aqui https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript?rq=1
 
