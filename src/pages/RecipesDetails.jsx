@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
+import IngredientsList from '../components/IngredientsList';
+import RecipeHead from '../components/RecipeHead';
+import RecipeImage from '../components/RecipeImage';
+import RecipeInstructions from '../components/RecipeInstructions';
 import ShareButton from '../components/ShareButton';
 import StartRecipesBtn from '../components/StartRecipesBtn';
 import { fetchDetails, fetchRecipes } from '../services/requests';
 import '../styles/itemCard.css';
+import handleIngredientsList from '../utils/handleIngredientsList';
 
 function RecipesDetails() {
   const [details, setDetails] = useState([]);
@@ -22,7 +27,6 @@ function RecipesDetails() {
   let title;
   let strRecipe;
   let category;
-  let idItem;
 
   if (path.includes('comidas')) {
     api = 'themealdb';
@@ -32,7 +36,6 @@ function RecipesDetails() {
     strRecipe = 'strDrink';
     title = 'strMeal';
     category = 'strCategory';
-    idItem = 'idMeal';
   } else {
     api = 'thecocktaildb';
     api2 = 'themealdb';
@@ -41,7 +44,6 @@ function RecipesDetails() {
     strRecipe = 'strMeal';
     title = 'strDrink';
     category = 'strAlcoholic';
-    idItem = 'idDrink';
   }
 
   const handleFecthDetail = async () => {
@@ -62,81 +64,42 @@ function RecipesDetails() {
       handleFecthRecipes();
     }
   });
-  // console.log(details);
-  if (details === undefined || details.length === 0) return 'loading';
+
+  if (details.length === 0) return 'loading';
+  const listOfIngredients = handleIngredientsList(details[0]);
+
   const player = details[0].strYoutube;
   let change;
   if (path.includes('comidas')) {
     change = player.replace('watch?v=', 'embed/');
   }
 
-  const idUrl = details[0][idItem];
-
   return (
     <div>
-
-      <div className="img-details">
-        <img data-testid="recipe-photo" src={ details[0][thumb] } alt="img" />
-      </div>
+      <RecipeImage thumb={ details[0][thumb] } />
       <div className="head-details">
-        <div>
-          <h1 data-testid="recipe-title">
-            {details[0][title]}
-          </h1>
-          <p data-testid="recipe-category">
-            {details[0][category]}
-          </p>
-        </div>
+        <RecipeHead title={ details[0][title] } category={ details[0][category] } />
         <div className="head-btns">
           <ShareButton setLoadMessage={ setLoadMessage } />
           <FavoriteButton details={ details[0] } />
           <p hidden={ !loadMessage }>Link copiado!</p>
         </div>
       </div>
-      <div>
-        <h3>
-          Ingredients
-        </h3>
-        <ul>
-          {Object.keys(details[0])
-            .filter((key) => key.includes('Ingredient'))
-            .map((ingredient, index) => {
-              const measure = details[0][`strMeasure${index + 1}`];
-              let stringMeasure = `- ${measure}`;
-              if (measure === null) {
-                stringMeasure = '';
-              }
-              return details[0][ingredient] !== '' && details[0][ingredient] !== null ? (
-                <li
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {`${details[0][ingredient]} ${stringMeasure}`}
-                </li>) : undefined;
-            })}
-        </ul>
-      </div>
-      <div>
-        <h3>
-          Instructions
-        </h3>
-        <p data-testid="instructions">
-          {details[0].strInstructions}
-        </p>
-      </div>
+      <IngredientsList progress={ false } testid="ingredient-name-and-measure" list={ listOfIngredients } />
+      <RecipeInstructions instructions={ details[0].strInstructions } />
       {path.includes('comidas')
-      && (
-        <div className="player-video" id="teste">
-          <iframe
-            data-testid="video"
-            whidth="360"
-            height="300"
-            src={ change }
-            frameBorder="0"
-            title="Youtube Video Player"
-          />
-        </div>
-      )}
+        && (
+          <div className="player-video" id="teste">
+            <iframe
+              data-testid="video"
+              whidth="360"
+              height="300"
+              src={ change }
+              frameBorder="0"
+              title="Youtube Video Player"
+            />
+          </div>
+        )}
       <div className="recomended">
         <h3>Recommended Recipes</h3>
         <div className="item-card-cont-details">
@@ -153,7 +116,7 @@ function RecipesDetails() {
         </div>
       </div>
       <div className="btn-start-div">
-        <StartRecipesBtn idUrl={ idUrl } details={ details[0] } />
+        <StartRecipesBtn />
       </div>
     </div>
   );
