@@ -21,17 +21,32 @@ function RecipesInProgress() {
   let thumb;
   let title;
   let category;
+  let idItem;
+  let area;
+  let type;
+  let cat;
+  let tags;
 
   if (path.includes('comidas')) {
+    idItem = 'idMeal';
     api = 'themealdb';
     thumb = 'strMealThumb';
     title = 'strMeal';
     category = 'strCategory';
+    area = 'strArea';
+    type = 'comida';
+    cat = 'strCategory';
+    tags = [details[0].strTags];
   } else {
+    idItem = 'idDrink';
     api = 'thecocktaildb';
     thumb = 'strDrinkThumb';
     title = 'strDrink';
     category = 'strAlcoholic';
+    cat = 'strCategory';
+    area = '';
+    type = 'bebida';
+    tags = [];
   }
 
   const handleFecthDetails = async () => {
@@ -48,6 +63,39 @@ function RecipesInProgress() {
 
   if (details.length === 0) return 'loading';
   const listOfIngredients = handleIngredientsList(details[0]);
+
+  // a data eu peguei aqui https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript?rq=1
+
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const yyyy = today.getFullYear();
+
+  today = `${dd}/${mm}/${yyyy}`;
+
+  const recipe = {
+    id: details[0][idItem],
+    type,
+    area: details[0][area] || '',
+    category: details[0][cat],
+    alcoholicOrNot: details[0].strAlcoholic || '',
+    name: details[0][title],
+    image: details[0][thumb],
+    doneDate: today,
+    tags,
+  };
+
+  const handleClick = () => {
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify([recipe]));
+      history.push('/receitas-feitas');
+    } else {
+      const exist = JSON.parse(localStorage.getItem('doneRecipes'));
+      const arr = [...exist, recipe];
+      localStorage.setItem('doneRecipes', JSON.stringify(arr));
+      history.push('/receitas-feitas');
+    }
+  };
 
   return (
     <div>
@@ -66,6 +114,7 @@ function RecipesInProgress() {
         className="btn-start"
         type="button"
         data-testid="finish-recipe-btn"
+        onClick={ handleClick }
       >
         Finalizar receita
       </button>
