@@ -38,8 +38,8 @@ function StartRecipesBtn() {
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (progress) {
-      if ((progress.meals[id] || progress.cocktails[id])
-       && (progress.meals[id] !== progress.cocktails[id])) {
+      if ((path.includes('comidas') && progress.meals[id])
+       || (path.includes('bebidas') && progress.cocktails[id])) {
         setRecipeButtonText('Continuar Receita');
       }
     } else if (path.includes('comidas')) {
@@ -48,6 +48,7 @@ function StartRecipesBtn() {
         meals: { [id]: [] },
       }));
     } else {
+      console.log('entrou 53');
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         cocktails: { [id]: [] },
         meals: {},
