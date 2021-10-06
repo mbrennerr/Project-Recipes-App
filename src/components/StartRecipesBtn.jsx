@@ -48,7 +48,6 @@ function StartRecipesBtn() {
         meals: { [id]: [] },
       }));
     } else {
-      console.log('entrou 53');
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         cocktails: { [id]: [] },
         meals: {},

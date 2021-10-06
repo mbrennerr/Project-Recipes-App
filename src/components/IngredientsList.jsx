@@ -47,6 +47,8 @@ const IngredientsList = ({ testid, list, progress }) => {
       ]));
     }
     verifyIfShouldEnableButton();
+    const label = document.querySelector(`label[name=${name}`);
+    label.classList.toggle('checked');
   };
 
   const handleCheck = () => {
@@ -54,6 +56,8 @@ const IngredientsList = ({ testid, list, progress }) => {
     if (checkboxes) {
       checkboxes.forEach((check) => {
         const input = document.getElementById(check);
+        const label = document.querySelector(`label[name=${check}`);
+        label.classList.toggle('checked');
         input.setAttribute('checked', 'true');
       });
     }
@@ -73,13 +77,14 @@ const IngredientsList = ({ testid, list, progress }) => {
       {list.map((item, index) => {
         if (item) {
           if (progress) {
-            const name = item.split(' -')[0];
+            const name = item.split(' ')[0];
             return (
               <label
                 key={ index }
                 className="ingredient-item"
                 data-testid={ `${index}-${testid}` }
                 htmlFor={ name }
+                name={ name }
               >
                 <input
                   value={ name }
