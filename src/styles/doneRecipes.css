@@ -1,0 +1,80 @@
+.doneRecipe img {
+  width: 150px;
+  margin: 15px 2px;
+}
+
+.doneRecipe {
+  height: 180px;
+  display: flex;
+  margin: 15px auto;
+  width: 350px;
+  box-shadow: 10px 6px 10px lightblue, -.3em 0 .4em lightblue;
+}
+
+.top-text p {
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.items-list {
+  margin-left: 10px;
+  width: 180px;
+}
+
+.title-btn {
+  background-color: transparent;
+  border: none;
+  text-align: start;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.items-list p {
+  margin: 10px;
+}
+
+.share-btn {
+  background-color: transparent;
+  border-style: none;
+  width: 18px;
+  height: 18px;
+  margin: 10px 4px 0 0;
+}
+
+.head-done {
+  display: flex;
+  justify-content: space-between;
+}
+
+.head-done p {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btns-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 5px auto 0;
+  width: 95%;
+}
+
+.btns-filter button {
+  background-color: lightblue;
+  border-radius: 5px;
+  height: 35px;
+  margin: 2px auto;
+  width: 32%;
+}
+
+.tags {
+  display: flex;
+}
+
+.tags p {
+  width: fit-content;
+  margin-right: 2px;
+}
