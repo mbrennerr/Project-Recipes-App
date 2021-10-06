@@ -60,7 +60,7 @@ function RecipesInProgress() {
     area = 'strArea';
     type = 'comida';
     cat = 'strCategory';
-    tags = [details[0].strTags];
+    tags = details[0].strTags.split(',');
   } else {
     idItem = 'idDrink';
     thumb = 'strDrinkThumb';

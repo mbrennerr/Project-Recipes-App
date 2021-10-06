@@ -52,15 +52,15 @@ const IngredientsList = ({ testid, list, progress }) => {
   };
 
   const handleCheck = () => {
-    const checkboxes = JSON.parse(localStorage.getItem('checkboxes'));
-    if (checkboxes) {
-      checkboxes.forEach((check) => {
-        const input = document.getElementById(check);
-        const label = document.querySelector(`label[name=${check}`);
-        label.classList.toggle('checked');
-        input.setAttribute('checked', 'true');
-      });
-    }
+    // const checkboxes = JSON.parse(localStorage.getItem('checkboxes'));
+    // if (checkboxes) {
+    //   checkboxes.forEach((check) => {
+    //     const input = document.getElementById(check);
+    //     const label = document.querySelector(`label[name=${check}`);
+    //     label.classList.toggle('checked');
+    //     input.setAttribute('checked', 'true');
+    //   });
+    // }
   };
 
   useEffect(() => {
