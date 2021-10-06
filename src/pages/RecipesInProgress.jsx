@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
 import IngredientsList from '../components/IngredientsList';
@@ -14,6 +15,9 @@ function RecipesInProgress() {
   const [loadMessage, setLoadMessage] = useState(false);
   const history = useHistory();
   const firstRender = useRef(true);
+  const disableButton = useSelector(({ functionsReducer }) => (
+    functionsReducer.disableFinishButton
+  ));
 
   const path = history.location.pathname;
   const id = path.match(/\d+/)[0];
@@ -119,6 +123,7 @@ function RecipesInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
+        disabled={ disableButton }
       >
         Finalizar receita
       </button>

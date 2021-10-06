@@ -9,7 +9,7 @@ function StartRecipesBtn() {
 
   const { id } = useParams();
 
-  const myfunc = () => {
+  const handleClick = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (path.includes('comidas') && !progress.meals[id]) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -64,7 +64,7 @@ function StartRecipesBtn() {
     <button
       type="button"
       data-testid="start-recipe-btn"
-      onClick={ myfunc }
+      onClick={ handleClick }
       className="btn-start"
     >
       {recipeButtonText}
