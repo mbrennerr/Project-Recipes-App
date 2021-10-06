@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/ingredientsList.css';
 import { useDispatch } from 'react-redux';
@@ -6,6 +6,7 @@ import { setButtonState } from '../redux/actions/index';
 
 const IngredientsList = ({ testid, list, progress }) => {
   const dispatch = useDispatch();
+  const firstRender = useRef(true);
 
   const verifyIfShouldEnableButton = () => {
     let numberOfInputsChecked = 0;
@@ -17,6 +18,8 @@ const IngredientsList = ({ testid, list, progress }) => {
     });
     if (numberOfInputsChecked === inputs.length) {
       dispatch(setButtonState(false));
+    } else {
+      dispatch(setButtonState(true));
     }
   };
 
@@ -57,8 +60,12 @@ const IngredientsList = ({ testid, list, progress }) => {
   };
 
   useEffect(() => {
-    handleCheck();
-  }, []);
+    if (progress && firstRender.current) {
+      firstRender.current = false;
+      handleCheck();
+      verifyIfShouldEnableButton();
+    }
+  });
 
   return (
     <div>
