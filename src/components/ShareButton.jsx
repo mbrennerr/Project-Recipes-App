@@ -1,13 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
 function ShareButton({ setLoadMessage }) {
+  const { pathname } = useLocation();
+  const { href } = window.location;
+  let copyLink;
+
+  if (pathname.includes('in-progress')) {
+    const [link] = href.split('/in-progress');
+    copyLink = link;
+  } else {
+    copyLink = href;
+  }
+
   const shareRecipe = () => {
     setLoadMessage(true);
-    copy(window.location.href);
+    copy(copyLink);
     const TIME = 2000;
     setTimeout(() => {
       setLoadMessage(false);

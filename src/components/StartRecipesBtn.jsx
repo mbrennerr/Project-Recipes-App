@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 
 function StartRecipesBtn() {
   const history = useHistory();
   const path = history.location.pathname;
   const [recipeButtonText, setRecipeButtonText] = useState('Iniciar Receita');
+  const firstRender = useRef(true);
 
   const { id } = useParams();
 
-  const myfunc = () => {
+  const handleClick = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (path.includes('comidas') && !progress.meals[id]) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -37,9 +38,8 @@ function StartRecipesBtn() {
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (progress) {
-      if (path.includes('comidas') && progress.meals[id]) {
-        setRecipeButtonText('Continuar Receita');
-      } else if (path.includes('bebidas') && progress.cocktails[id]) {
+      if ((path.includes('comidas') && progress.meals[id])
+       || (path.includes('bebidas') && progress.cocktails[id])) {
         setRecipeButtonText('Continuar Receita');
       }
     } else if (path.includes('comidas')) {
@@ -56,14 +56,15 @@ function StartRecipesBtn() {
   };
 
   useEffect(() => {
-    handleButtonText();
-  }, []);
+    if (firstRender.current) handleButtonText();
+    else firstRender.current = false;
+  });
 
   return (
     <button
       type="button"
       data-testid="start-recipe-btn"
-      onClick={ myfunc }
+      onClick={ handleClick }
       className="btn-start"
     >
       {recipeButtonText}
