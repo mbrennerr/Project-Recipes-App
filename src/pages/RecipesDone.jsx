@@ -27,6 +27,15 @@ function RecipesDone() {
     }
   };
 
+  if (!recipes || recipes.length === 0) {
+    return (
+      <div>
+        <Header />
+        <p>Opa, nenhuma receita finalizada!</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header />

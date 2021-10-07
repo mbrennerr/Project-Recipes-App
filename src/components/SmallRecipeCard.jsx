@@ -2,10 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavoriteButton from './FavoriteButton';
-import ShareButton from './ShareButton';
+import shareIcon from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function SmallRecipeCard({ recipes, isFavoritePage, handleReload }) {
   const [message, setMessage] = useState(false);
+  const [messageIndex, setMessageIndex] = useState();
+
+  const changeMessage = (index) => {
+    setMessageIndex(index);
+    const time = 2000;
+    setMessage(true);
+    setTimeout(() => {
+      setMessage(false);
+    }, time);
+  };
 
   const orig = window.location.origin;
   return (
@@ -32,11 +44,16 @@ function SmallRecipeCard({ recipes, isFavoritePage, handleReload }) {
                     ? <p>{`${recipe.area} - ${recipe.category}`}</p>
                     : <p>{recipe.alcoholicOrNot}</p>}
                 </div>
-                <ShareButton
-                  testid={ `${index}-horizontal-share-btn` }
-                  url={ `${orig}/${recipe.type}s/${recipe.id}` }
-                  setLoadMessage={ setMessage }
-                  smallRecipeCard
+                <input
+                  type="image"
+                  className="share-btn"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  onClick={ () => {
+                    (copy(`${orig}/${recipe.type}s/${recipe.id}`));
+                    changeMessage(index);
+                  } }
+                  src={ shareIcon }
+                  alt="share"
                 />
                 {isFavoritePage && (<FavoriteButton
                   handleReload={ handleReload }
@@ -45,7 +62,9 @@ function SmallRecipeCard({ recipes, isFavoritePage, handleReload }) {
                   details={ recipe }
                 />)}
               </div>
-              <span hidden={ !message }> Link copiado! </span>
+              {/* Matheus Duarte me ajudou a pensar nisso */}
+              {index === messageIndex
+                ? <p hidden={ !message }> Link copiado! </p> : ''}
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <p className="title" data-testid={ `${index}-horizontal-name` }>
                   {recipe.name}

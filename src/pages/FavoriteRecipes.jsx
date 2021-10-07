@@ -23,7 +23,7 @@ function FavoriteRecipes() {
       .parse(localStorage.getItem('favoriteRecipes')));
   };
 
-  if (!favorites) {
+  if (!favorites || favorites.length === 0) {
     return (
       <div>
         <Header />
