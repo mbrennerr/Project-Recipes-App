@@ -30,6 +30,7 @@ function RecipesInProgress() {
   let type;
   let cat;
   let tags;
+  let lsKey;
 
   if (path.includes('comidas')) {
     api = 'themealdb';
@@ -53,6 +54,7 @@ function RecipesInProgress() {
   const listOfIngredients = handleIngredientsList(details[0]);
 
   if (path.includes('comidas')) {
+    lsKey = 'meals';
     idItem = 'idMeal';
     thumb = 'strMealThumb';
     title = 'strMeal';
@@ -62,6 +64,7 @@ function RecipesInProgress() {
     cat = 'strCategory';
     tags = [details[0].strTags];
   } else {
+    lsKey = 'cocktails';
     idItem = 'idDrink';
     thumb = 'strDrinkThumb';
     title = 'strDrink';
@@ -102,6 +105,12 @@ function RecipesInProgress() {
       const arr = [...exist, recipe];
       localStorage.setItem('doneRecipes', JSON.stringify(arr));
       history.push('/receitas-feitas');
+    }
+    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (recipesInProgress) {
+      delete recipesInProgress[lsKey][id];
+      console.log(recipesInProgress);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
     }
   };
 

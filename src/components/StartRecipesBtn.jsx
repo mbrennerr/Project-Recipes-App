@@ -11,47 +11,49 @@ function StartRecipesBtn() {
 
   const handleClick = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (path.includes('comidas') && !progress.meals[id]) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        cocktails: {
-          ...progress.cocktails,
-        },
-        meals: {
-          ...progress.meals,
-          [id]: [],
-        },
-      }));
-    } else if (path.includes('bebidas') && !progress.cocktails[id]) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        cocktails: {
-          ...progress.cocktails,
-          [id]: [],
-        },
-        meals: {
-          ...progress.meals,
-        },
-      }));
+    if (path.includes('comidas')) {
+      if (progress) {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          cocktails: {
+            ...progress.cocktails,
+          },
+          meals: {
+            ...progress.meals,
+            [id]: [],
+          },
+        }));
+      } else {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          cocktails: {},
+          meals: { [id]: [] },
+        }));
+      }
+    } else if (path.includes('bebidas')) {
+      if (progress) {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          cocktails: {
+            ...progress.cocktails,
+            [id]: [],
+          },
+          meals: {
+            ...progress.meals,
+          },
+        }));
+      } else {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          cocktails: { [id]: [] },
+          meals: {},
+        }));
+      }
     }
     history.push(`${id}/in-progress`);
   };
 
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (progress) {
-      if ((path.includes('comidas') && progress.meals[id])
-       || (path.includes('bebidas') && progress.cocktails[id])) {
-        setRecipeButtonText('Continuar Receita');
-      }
-    } else if (path.includes('comidas')) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        cocktails: {},
-        meals: { [id]: [] },
-      }));
-    } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        cocktails: { [id]: [] },
-        meals: {},
-      }));
+    if ((path.includes('comidas') && progress.meals[id])
+      || (path.includes('bebidas') && progress.cocktails[id])) {
+      setRecipeButtonText('Continuar Receita');
     }
   };
 
