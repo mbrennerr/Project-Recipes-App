@@ -36,6 +36,7 @@ export const fetchDetails = async (api, id) => {
   if (api === 'themealdb') {
     return result.meals;
   }
+  if (!result.drinks) return [];
   return result.drinks;
 };
 
