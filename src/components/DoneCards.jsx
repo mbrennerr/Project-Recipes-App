@@ -9,9 +9,10 @@ const copy = require('clipboard-copy');
 function DoneCards({ doneRecipes }) {
   const [message, setMessage] = useState(false);
   const history = useHistory();
+  const [messageIndex, setMessageIndex] = useState();
 
   const changeMessage = (index) => {
-    console.log(index);
+    setMessageIndex(index);
     const time = 2000;
     setMessage(true);
     setTimeout(() => {
@@ -61,8 +62,6 @@ function DoneCards({ doneRecipes }) {
                   alt="share"
                 />
               </div>
-              <span hidden={ !message }> Link copiado! </span>
-              {/* {console.log(message[index])} */}
               <button
                 onClick={ () => changeRoute(type, id) }
                 type="button"
@@ -76,11 +75,14 @@ function DoneCards({ doneRecipes }) {
 
                 </p>
               </button>
+              {/* Matheus Duarte me ajudou a pensar nisso */}
+              {index === messageIndex
+                ? <span hidden={ !message }> Link copiado! </span> : ''}
               <p data-testid={ `${index}-horizontal-done-date` }>
                 {`Feito em: ${doneDate}`}
               </p>
               <div className="tags">
-                {tags ? tags.splice(0, 2).map((item, i) => (
+                {tags ? tags.slice(0, 2).map((item, i) => (
                   <p key={ i } data-testid={ `${index}-${item}-horizontal-tag` }>
                     {item}
                   </p>

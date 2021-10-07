@@ -52,6 +52,12 @@ function RecipesInProgress() {
   if (details.length === 0) return 'loading';
   const listOfIngredients = handleIngredientsList(details[0]);
 
+  if (details[0].strTags === null) {
+    tags = [];
+  } else if (path.includes('comidas')) {
+    tags = details[0].strTags.split(',');
+  }
+
   if (path.includes('comidas')) {
     idItem = 'idMeal';
     thumb = 'strMealThumb';
@@ -60,7 +66,6 @@ function RecipesInProgress() {
     area = 'strArea';
     type = 'comida';
     cat = 'strCategory';
-    tags = details[0].strTags.split(',');
   } else {
     idItem = 'idDrink';
     thumb = 'strDrinkThumb';

@@ -11,8 +11,10 @@ function RecipesDone() {
   useEffect(() => {
     if (filters === 'all') {
       setDoneRecipes(recipes);
+      console.log('all');
     } else {
       setDoneRecipes(recipes.filter((done) => done.type === filters));
+      console.log('others');
     }
   }, [filters]);
 

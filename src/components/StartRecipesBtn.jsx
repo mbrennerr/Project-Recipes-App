@@ -5,6 +5,7 @@ function StartRecipesBtn() {
   const history = useHistory();
   const path = history.location.pathname;
   const [recipeButtonText, setRecipeButtonText] = useState('Iniciar Receita');
+  const [disableButton, setDisableButton] = useState(false);
   const firstRender = useRef(true);
 
   const { id } = useParams();
@@ -35,6 +36,13 @@ function StartRecipesBtn() {
     history.push(`${id}/in-progress`);
   };
 
+  const doubleRecipe = () => {
+    const double = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (double && double.some((item) => item.id === id)) {
+      setDisableButton(true);
+    }
+  };
+
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (progress) {
@@ -56,8 +64,10 @@ function StartRecipesBtn() {
   };
 
   useEffect(() => {
-    if (firstRender.current) handleButtonText();
-    else firstRender.current = false;
+    if (firstRender.current) {
+      handleButtonText();
+      doubleRecipe();
+    } else firstRender.current = false;
   });
 
   return (
@@ -66,6 +76,7 @@ function StartRecipesBtn() {
       data-testid="start-recipe-btn"
       onClick={ handleClick }
       className="btn-start"
+      disabled={ disableButton }
     >
       {recipeButtonText}
     </button>
