@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import FavoriteButton from '../components/FavoriteButton';
 import shareIcon from '../images/shareIcon.svg';
@@ -89,18 +90,22 @@ function FavoriteRecipes() {
             key={ index }
           >
             <div>
-              <img
-                data-testid={ `${index}-horizontal-image` }
-                src={ favorite.image }
-                alt="imagem"
-              />
+              <Link to={ `/${favorite.type}s/${favorite.id}` }>
+                <img
+                  data-testid={ `${index}-horizontal-image` }
+                  src={ favorite.image }
+                  alt="imagem"
+                />
+              </Link>
             </div>
             <div>
               <span data-testid={ `${index}-horizontal-top-text` }>
                 { `${favorite.alcoholicOrNot ? favorite.alcoholicOrNot
                   : favorite.area} - ${favorite.category}` }
               </span>
-              <h3 data-testid={ `${index}-horizontal-name` }>{ favorite.name }</h3>
+              <Link to={ `/${favorite.type}s/${favorite.id}` }>
+                <h3 data-testid={ `${index}-horizontal-name` }>{ favorite.name }</h3>
+              </Link>
               <div className="head-btns">
                 <input
                   type="image"
