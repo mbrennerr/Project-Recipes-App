@@ -1,48 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import favoriteButtonHelper from '../utils/favoriteButtonHelper';
 
-function FavoriteButton(details) {
+function FavoriteButton({ details, isFavoritePage, handleReload, testid }) {
   const [image, setImage] = useState(whiteHeartIcon);
   const location = useLocation();
   const path = location.pathname;
 
-  let id;
-  let name;
-  let img;
-  let alcool;
-  let area;
-  let type;
-  let category;
-
-  if (path.includes('comidas')) {
-    id = details.details.idMeal;
-    name = details.details.strMeal;
-    img = details.details.strMealThumb;
-    alcool = '';
-    area = details.details.strArea;
-    type = 'comida';
-    category = details.details.strCategory;
-  } else {
-    id = details.details.idDrink;
-    name = details.details.strDrink;
-    img = details.details.strDrinkThumb;
-    alcool = details.details.strAlcoholic;
-    area = '';
-    type = 'bebida';
-    category = details.details.strCategory;
-  }
-
-  const favorite = {
-    id,
-    type,
-    area,
-    category,
-    alcoholicOrNot: alcool,
-    name,
-    image: img,
-  };
+  const favorite = favoriteButtonHelper(isFavoritePage, path, details);
+  const { id } = favorite;
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
@@ -72,17 +41,31 @@ function FavoriteButton(details) {
         localStorage.setItem('favoriteRecipes', JSON.stringify(arr));
       }
     }
+    if (isFavoritePage) {
+      handleReload();
+    }
   };
 
   return (
     <input
       type="image"
-      data-testid="favorite-btn"
+      data-testid={ testid }
       onClick={ handleFavorite }
       src={ image }
       alt="favorite"
     />
   );
 }
+
+FavoriteButton.propTypes = {
+  details: PropTypes.objectOf(PropTypes.string).isRequired,
+  isFavoritePage: PropTypes.bool.isRequired,
+  handleReload: PropTypes.func,
+  testid: PropTypes.string.isRequired,
+};
+
+FavoriteButton.defaultProps = {
+  handleReload: () => console.log('oi'),
+};
 
 export default FavoriteButton;

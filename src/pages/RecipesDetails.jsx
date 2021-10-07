@@ -62,7 +62,7 @@ function RecipesDetails() {
       handleFecthRecipes();
     }
   });
-  // console.log(details);
+
   if (details === undefined || details.length === 0) return 'loading';
   const player = details[0].strYoutube;
   let change;
@@ -89,7 +89,11 @@ function RecipesDetails() {
         </div>
         <div className="head-btns">
           <ShareButton setLoadMessage={ setLoadMessage } />
-          <FavoriteButton details={ details[0] } />
+          <FavoriteButton
+            testid="favorite-btn"
+            isFavoritePage={ false }
+            details={ details[0] }
+          />
           <p hidden={ !loadMessage }>Link copiado!</p>
         </div>
       </div>
