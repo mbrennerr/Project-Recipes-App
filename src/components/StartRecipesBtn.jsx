@@ -49,10 +49,16 @@ function StartRecipesBtn() {
     history.push(`${id}/in-progress`);
   };
 
+  let key;
+  if(path.includes('comidas')) {
+    key = 'meals';
+  } else {
+    key = 'cocktails'
+  }
+
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if ((path.includes('comidas') && progress.meals[id])
-      || (path.includes('bebidas') && progress.cocktails[id])) {
+    if (progress && progress[key][id]) {
       setRecipeButtonText('Continuar Receita');
     }
   };
