@@ -112,7 +112,11 @@ function RecipesInProgress() {
         <RecipeHead title={ details[0][title] } category={ details[0][category] } />
         <div className="head-btns">
           <ShareButton setLoadMessage={ setLoadMessage } />
-          <FavoriteButton testid="favorite-btn" isFavoritePage={ false } details={ details[0] } />
+          <FavoriteButton
+            testid="favorite-btn"
+            isFavoritePage={ false }
+            details={ details[0] }
+          />
           <p hidden={ !loadMessage }>Link copiado!</p>
         </div>
       </div>
