@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/ingredientsList.css';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 import { setButtonState } from '../redux/actions/index';
 
 const IngredientsList = ({ testid, list, progress }) => {
   const dispatch = useDispatch();
   const firstRender = useRef(true);
+  const { id } = useParams();
 
   const verifyIfShouldEnableButton = () => {
     let numberOfInputsChecked = 0;
@@ -26,25 +28,34 @@ const IngredientsList = ({ testid, list, progress }) => {
   const handleClick = ({ target: { name, checked } }) => {
     const checkboxes = JSON.parse(localStorage.getItem('checkboxes'));
     if (checkboxes) {
-      if (checkboxes.includes(name)) {
-        // se já existe no ls, remove o item
-        checkboxes.splice(checkboxes.indexOf(name), 1);
-        localStorage.setItem('checkboxes', JSON.stringify([
+      if (checkboxes[id]) {
+        if (checkboxes[id].includes(name)) {
+          // se já existe no ls, remove o item
+          checkboxes[id].splice(checkboxes[id].indexOf(name), 1);
+          localStorage.setItem('checkboxes', JSON.stringify({
+            ...checkboxes,
+            [id]: [...checkboxes[id]],
+          }));
+        }
+        if (checked) {
+          // seta o item no ls se ele estiver checkado
+          localStorage.setItem('checkboxes', JSON.stringify({
+            ...checkboxes,
+            [id]: [...checkboxes[id], name],
+          }));
+        }
+      } else {
+        // se não existe, cria
+        localStorage.setItem('checkboxes', JSON.stringify({
           ...checkboxes,
-        ]));
-      }
-      if (checked) {
-        // seta o item no ls se ele estiver checkado
-        localStorage.setItem('checkboxes', JSON.stringify([
-          ...checkboxes,
-          name,
-        ]));
+          [id]: [name],
+        }));
       }
     } else if (checked) {
-      // seta o item no ls se ele estiver checkado se não existe nada no ls
-      localStorage.setItem('checkboxes', JSON.stringify([
-        name,
-      ]));
+      // seta o item no ls se ele estiver checkado e se não existe nada no ls
+      localStorage.setItem('checkboxes', JSON.stringify({
+        [id]: [name],
+      }));
     }
     verifyIfShouldEnableButton();
     const label = document.querySelector(`label[name=${name}`);
@@ -53,8 +64,8 @@ const IngredientsList = ({ testid, list, progress }) => {
 
   const handleCheck = () => {
     const checkboxes = JSON.parse(localStorage.getItem('checkboxes'));
-    if (checkboxes) {
-      checkboxes.forEach((check) => {
+    if (checkboxes && checkboxes[id]) {
+      checkboxes[id].forEach((check) => {
         const input = document.getElementById(check);
         const label = document.querySelector(`label[name=${check}`);
         label.classList.toggle('checked');
