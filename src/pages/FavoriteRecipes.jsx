@@ -48,13 +48,13 @@ function FavoriteRecipes() {
       .parse(localStorage.getItem('favoriteRecipes')));
   };
 
-  if(!favorites) {
+  if (!favorites) {
     return (
       <div>
         <Header />
         <p>Opa, nenhuma receita favoritada!</p>
       </div>
-    )
+    );
   }
 
   return (
