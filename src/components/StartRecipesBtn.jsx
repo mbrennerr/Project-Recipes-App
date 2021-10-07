@@ -8,53 +8,36 @@ function StartRecipesBtn() {
   const firstRender = useRef(true);
 
   const { id } = useParams();
+  let key;
+  let otherKey;
+  if (path.includes('comidas')) {
+    key = 'meals';
+    otherKey = 'cocktails';
+  } else {
+    key = 'cocktails';
+    otherKey = 'meals';
+  }
 
   const handleClick = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (path.includes('comidas')) {
-      if (progress) {
-        localStorage.setItem('inProgressRecipes', JSON.stringify({
-          cocktails: {
-            ...progress.cocktails,
-          },
-          meals: {
-            ...progress.meals,
-            [id]: [],
-          },
-        }));
-      } else {
-        localStorage.setItem('inProgressRecipes', JSON.stringify({
-          cocktails: {},
-          meals: { [id]: [] },
-        }));
-      }
-    } else if (path.includes('bebidas')) {
-      if (progress) {
-        localStorage.setItem('inProgressRecipes', JSON.stringify({
-          cocktails: {
-            ...progress.cocktails,
-            [id]: [],
-          },
-          meals: {
-            ...progress.meals,
-          },
-        }));
-      } else {
-        localStorage.setItem('inProgressRecipes', JSON.stringify({
-          cocktails: { [id]: [] },
-          meals: {},
-        }));
-      }
+    if (progress) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        [otherKey]: {
+          ...progress[otherKey],
+        },
+        [key]: {
+          ...progress[key],
+          [id]: [],
+        },
+      }));
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        [otherKey]: {},
+        [key]: { [id]: [] },
+      }));
     }
     history.push(`${id}/in-progress`);
   };
-
-  let key;
-  if(path.includes('comidas')) {
-    key = 'meals';
-  } else {
-    key = 'cocktails'
-  }
 
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
