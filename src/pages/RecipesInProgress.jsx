@@ -30,6 +30,7 @@ function RecipesInProgress() {
   let type;
   let cat;
   let tags;
+  let lsKey;
 
   if (path.includes('comidas')) {
     api = 'themealdb';
@@ -59,6 +60,7 @@ function RecipesInProgress() {
   }
 
   if (path.includes('comidas')) {
+    lsKey = 'meals';
     idItem = 'idMeal';
     thumb = 'strMealThumb';
     title = 'strMeal';
@@ -67,6 +69,7 @@ function RecipesInProgress() {
     type = 'comida';
     cat = 'strCategory';
   } else {
+    lsKey = 'cocktails';
     idItem = 'idDrink';
     thumb = 'strDrinkThumb';
     title = 'strDrink';
@@ -74,7 +77,6 @@ function RecipesInProgress() {
     cat = 'strCategory';
     area = '';
     type = 'bebida';
-    tags = [];
   }
 
   // a data eu peguei aqui https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript?rq=1
@@ -108,6 +110,12 @@ function RecipesInProgress() {
       localStorage.setItem('doneRecipes', JSON.stringify(arr));
       history.push('/receitas-feitas');
     }
+    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (recipesInProgress) {
+      delete recipesInProgress[lsKey][id];
+      console.log(recipesInProgress);
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
   };
 
   return (
@@ -116,8 +124,12 @@ function RecipesInProgress() {
       <div className="head-details">
         <RecipeHead title={ details[0][title] } category={ details[0][category] } />
         <div className="head-btns">
-          <ShareButton setLoadMessage={ setLoadMessage } />
-          <FavoriteButton details={ details[0] } />
+          <ShareButton testid="share-btn" setLoadMessage={ setLoadMessage } />
+          <FavoriteButton
+            testid="favorite-btn"
+            isFavoritePage={ false }
+            details={ details[0] }
+          />
           <p hidden={ !loadMessage }>Link copiado!</p>
         </div>
       </div>

@@ -11,10 +11,8 @@ function RecipesDone() {
   useEffect(() => {
     if (filters === 'all') {
       setDoneRecipes(recipes);
-      console.log('all');
     } else {
       setDoneRecipes(recipes.filter((done) => done.type === filters));
-      console.log('others');
     }
   }, [filters]);
 
@@ -56,8 +54,7 @@ function RecipesDone() {
             Drinks
           </button>
         </div>
-        {doneRecipes
-          ? <DoneCards doneRecipes={ doneRecipes } /> : 'Nenhuma receita concluída'}
+        <DoneCards doneRecipes={ doneRecipes } />
       </div>
     </div>
   );

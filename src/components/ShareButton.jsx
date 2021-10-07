@@ -5,7 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function ShareButton({ setLoadMessage }) {
+function ShareButton({ setLoadMessage, testid, smallRecipeCard, url }) {
   const { pathname } = useLocation();
   const { href } = window.location;
   let copyLink;
@@ -13,6 +13,8 @@ function ShareButton({ setLoadMessage }) {
   if (pathname.includes('in-progress')) {
     const [link] = href.split('/in-progress');
     copyLink = link;
+  } else if (smallRecipeCard) {
+    copyLink = url;
   } else {
     copyLink = href;
   }
@@ -27,13 +29,14 @@ function ShareButton({ setLoadMessage }) {
   };
 
   return (
-    <button
-      type="button"
-      data-testid="share-btn"
+    <input
+      type="image"
+      src={ shareIcon }
+      className="share-btn"
+      data-testid={ testid }
       onClick={ shareRecipe }
-    >
-      <img src={ shareIcon } alt="share" />
-    </button>
+      alt="share"
+    />
   );
 }
 
