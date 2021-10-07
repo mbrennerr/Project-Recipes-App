@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
 import IngredientsList from '../components/IngredientsList';
 import RecipeHead from '../components/RecipeHead';
@@ -17,9 +17,11 @@ function RecipesDetails() {
   const [loadMessage, setLoadMessage] = useState(false);
   const history = useHistory();
   const firstRender = useRef(true);
+  const { id } = useParams();
+  // const orig = window.location.origin;
 
   const path = history.location.pathname;
-  const id = path.match(/\d+/)[0];
+  // const id = path.match(/\d+/)[0];
   let api;
   let api2;
   let thumb;
@@ -27,6 +29,8 @@ function RecipesDetails() {
   let title;
   let strRecipe;
   let category;
+  let idIten;
+  let type;
 
   if (path.includes('comidas')) {
     api = 'themealdb';
@@ -36,6 +40,8 @@ function RecipesDetails() {
     strRecipe = 'strDrink';
     title = 'strMeal';
     category = 'strCategory';
+    idIten = 'idDrink';
+    type = 'bebidas';
   } else {
     api = 'thecocktaildb';
     api2 = 'themealdb';
@@ -44,7 +50,14 @@ function RecipesDetails() {
     strRecipe = 'strMeal';
     title = 'strDrink';
     category = 'strAlcoholic';
+    idIten = 'idMeal';
+    type = 'comidas';
   }
+
+  const changeRoute = (ids) => {
+    history.push(`/${type}/${ids}`);
+    window.location.reload();
+  };
 
   const handleFecthDetail = async () => {
     const apiReturn = await fetchDetails(api, id);
@@ -118,7 +131,12 @@ function RecipesDetails() {
               key={ recipe[strRecipe] }
             >
               <p data-testid={ `${index}-recomendation-title` }>{recipe[strRecipe]}</p>
-              <img src={ recipe[recipeThumb] } alt={ recipe[strRecipe] } />
+              <input
+                type="image"
+                src={ recipe[recipeThumb] }
+                alt={ recipe[strRecipe] }
+                onClick={ () => changeRoute(recipe[idIten]) }
+              />
             </div>
           ))}
         </div>
