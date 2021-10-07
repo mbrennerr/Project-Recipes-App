@@ -108,7 +108,6 @@ function FavoriteRecipes() {
                   handleReload={ reloadFavorites }
                   testid={ `${index}-horizontal-favorite-btn` }
                   isFavoritePage
-                  key={ favorite.id }
                   details={ favorite }
                 />
                 <p hidden={ !loadMessage }>Link copiado!</p>

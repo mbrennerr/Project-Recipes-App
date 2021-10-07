@@ -65,13 +65,9 @@ function RecipesDetails() {
     }
   });
 
-<<<<<<< HEAD
-  if (details === undefined || details.length === 0) return 'loading';
-=======
   if (details.length === 0) return 'loading';
   const listOfIngredients = handleIngredientsList(details[0]);
 
->>>>>>> f109bb2da82236cb5913932667c5055bd14bfed9
   const player = details[0].strYoutube;
   let change;
   if (path.includes('comidas')) {
