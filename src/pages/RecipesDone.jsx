@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import DoneCards from '../components/DoneCards';
+import SmallRecipeCard from '../components/SmallRecipeCard';
 import Header from '../components/Header';
 import '../styles/doneRecipes.css';
+import Filters from '../components/Filters';
 
 function RecipesDone() {
   const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -16,46 +17,17 @@ function RecipesDone() {
     }
   }, [filters]);
 
-  const handleClick = ({ target }) => {
-    const text = target.innerHTML;
-    if (text === 'All') {
-      setFilters('all');
-    } else if (text === 'Foods') {
-      setFilters('comida');
-    } else if (text === 'Drinks') {
-      setFilters('bebida');
-    }
-  };
-
   return (
     <div>
       <Header />
       <div>
-        <div className="btns-filter">
-          <button
-            type="button"
-            data-testid="filter-by-all-btn"
-            onClick={ handleClick }
-          >
-            All
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-food-btn"
-            onClick={ handleClick }
-          >
-            Foods
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-drink-btn"
-            onClick={ handleClick }
-          >
-            Drinks
-          </button>
-        </div>
-        {doneRecipes
-          ? <DoneCards doneRecipes={ doneRecipes } /> : 'Nenhuma receita concluída'}
+        <Filters setFilters={ setFilters } />
+        {doneRecipes ? (
+          <SmallRecipeCard
+            isFavoritePage={ false }
+            recipes={ doneRecipes }
+          />)
+          : 'Nenhuma receita concluída'}
       </div>
     </div>
   );
