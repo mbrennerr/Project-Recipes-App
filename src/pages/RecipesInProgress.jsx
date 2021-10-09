@@ -109,7 +109,6 @@ function RecipesInProgress() {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipesInProgress) {
       delete recipesInProgress[lsKey][id];
-      console.log(recipesInProgress);
       localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
     }
   };

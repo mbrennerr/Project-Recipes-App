@@ -36,12 +36,11 @@ function FavoriteRecipes() {
     <div>
       <Header />
       <Filters setFilters={ setFilters } />
-      {favorites ? (
-        <SmallRecipeCard
-          handleReload={ reloadFavorites }
-          isFavoritePage
-          recipes={ favorites }
-        />) : 'Nenhuma receita favoritada'}
+      <SmallRecipeCard
+        handleReload={ reloadFavorites }
+        isFavoritePage
+        recipes={ favorites }
+      />
     </div>
   );
 }

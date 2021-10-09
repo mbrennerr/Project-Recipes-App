@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import DoneCards from '../components/DoneCards';
+import Filters from '../components/Filters';
 import Header from '../components/Header';
+import SmallRecipeCard from '../components/SmallRecipeCard';
 import '../styles/doneRecipes.css';
 
 function RecipesDone() {
@@ -16,17 +17,6 @@ function RecipesDone() {
     }
   }, [filters]);
 
-  const handleClick = ({ target }) => {
-    const text = target.innerHTML;
-    if (text === 'All') {
-      setFilters('all');
-    } else if (text === 'Foods') {
-      setFilters('comida');
-    } else if (text === 'Drinks') {
-      setFilters('bebida');
-    }
-  };
-
   if (!recipes || recipes.length === 0) {
     return (
       <div>
@@ -40,30 +30,11 @@ function RecipesDone() {
     <div>
       <Header />
       <div>
-        <div className="btns-filter">
-          <button
-            type="button"
-            data-testid="filter-by-all-btn"
-            onClick={ handleClick }
-          >
-            All
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-food-btn"
-            onClick={ handleClick }
-          >
-            Foods
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-drink-btn"
-            onClick={ handleClick }
-          >
-            Drinks
-          </button>
-        </div>
-        <DoneCards doneRecipes={ doneRecipes } />
+        <Filters setFilters={ setFilters } />
+        <SmallRecipeCard
+          isFavoritePage={ false }
+          recipes={ doneRecipes }
+        />
       </div>
     </div>
   );

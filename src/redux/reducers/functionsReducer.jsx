@@ -2,6 +2,7 @@ import {
   ENABLE_DISABLE_SEARCH_BAR,
   ENABLE_BUTTON, DISABLE_BUTTON,
   ENABLE_DISABLE_FINISH_BUTTON,
+  LOAD_DETAILS_VALUES,
 } from '../actions';
 
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
   enableButton: false,
   disableButton: true,
   disableFinishButton: true,
+  loadValues: true,
 };
 
 const functionsReducer = (state = initialState, { type, change, value }) => {
@@ -23,6 +25,11 @@ const functionsReducer = (state = initialState, { type, change, value }) => {
     return {
       ...state,
       disableFinishButton: value,
+    };
+  case LOAD_DETAILS_VALUES:
+    return {
+      ...state,
+      loadValues: value,
     };
   default:
     return state;

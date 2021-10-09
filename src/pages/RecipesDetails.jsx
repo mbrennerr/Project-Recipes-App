@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useHistory, useParams } from 'react-router';
 import FavoriteButton from '../components/FavoriteButton';
 import IngredientsList from '../components/IngredientsList';
@@ -7,21 +9,27 @@ import RecipeImage from '../components/RecipeImage';
 import RecipeInstructions from '../components/RecipeInstructions';
 import ShareButton from '../components/ShareButton';
 import StartRecipesBtn from '../components/StartRecipesBtn';
+import { setDetailsValues } from '../redux/actions';
 import { fetchDetails, fetchRecipes } from '../services/requests';
 import '../styles/itemCard.css';
+import changeVideoLink from '../utils/changeVideoLink';
 import handleIngredientsList from '../utils/handleIngredientsList';
 
 function RecipesDetails() {
   const [details, setDetails] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [loadMessage, setLoadMessage] = useState(false);
+  const [loadingCards, setLoadingCards] = useState(true);
+  const [loadingDetails, setLoadingDetails] = useState(true);
   const history = useHistory();
-  const firstRender = useRef(true);
   const { id } = useParams();
-  // const orig = window.location.origin;
+
+  const shouldLoadValues = useSelector(({ functionsReducer }) => (
+    functionsReducer.loadValues
+  ));
+  const dispatch = useDispatch();
 
   const path = history.location.pathname;
-  // const id = path.match(/\d+/)[0];
   let api;
   let api2;
   let thumb;
@@ -56,7 +64,9 @@ function RecipesDetails() {
 
   const changeRoute = (ids) => {
     history.push(`/${type}/${ids}`);
-    window.location.reload();
+    dispatch(setDetailsValues(true));
+    setLoadingCards(true);
+    setLoadingDetails(true);
   };
 
   const handleFecthDetail = async () => {
@@ -71,25 +81,34 @@ function RecipesDetails() {
   };
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (shouldLoadValues) {
       handleFecthDetail();
       handleFecthRecipes();
+      dispatch(setDetailsValues(false));
     }
   });
 
-  if (details.length === 0) return 'loading';
+  useEffect(() => {
+    if (details.length > 0 && details[0][thumb] !== undefined) {
+      setLoadingDetails(false);
+    }
+  }, [details]);
+
+  useEffect(() => {
+    if (recipes.length > 0 && recipes[0][strRecipe] !== undefined) {
+      setLoadingCards(false);
+    }
+  }, [recipes]);
+
+  if (details.length === 0 || !details) return 'loading';
   const listOfIngredients = handleIngredientsList(details[0]);
 
-  const player = details[0].strYoutube;
-  let change;
-  if (path.includes('comidas')) {
-    change = player.replace('watch?v=', 'embed/');
-  }
+  let player = details[0].strYoutube;
+  player = changeVideoLink(path, player);
 
   return (
     <div>
-      <RecipeImage thumb={ details[0][thumb] } />
+      {!loadingDetails && <RecipeImage thumb={ details[0][thumb] } />}
       <div className="head-details">
         <RecipeHead title={ details[0][title] } category={ details[0][category] } />
         <div className="head-btns">
@@ -115,7 +134,7 @@ function RecipesDetails() {
               data-testid="video"
               whidth="360"
               height="300"
-              src={ change }
+              src={ player }
               frameBorder="0"
               title="Youtube Video Player"
             />
@@ -124,11 +143,11 @@ function RecipesDetails() {
       <div className="recomended">
         <h3>Recommended Recipes</h3>
         <div className="item-card-cont-details">
-          {recipes.map((recipe, index) => (
+          {!loadingCards && recipes.map((recipe, index) => (
             <div
               className="item-card-recomend"
               data-testid={ `${index}-recomendation-card` }
-              key={ recipe[strRecipe] }
+              key={ `${recipe[strRecipe]}` }
             >
               <p data-testid={ `${index}-recomendation-title` }>{recipe[strRecipe]}</p>
               <input
