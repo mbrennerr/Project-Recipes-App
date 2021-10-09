@@ -23,7 +23,7 @@ function FavoriteRecipes() {
       .parse(localStorage.getItem('favoriteRecipes')));
   };
 
-  if (!favorites) {
+  if (!favorites || favorites.length === 0) {
     return (
       <div>
         <Header />
@@ -36,12 +36,11 @@ function FavoriteRecipes() {
     <div>
       <Header />
       <Filters setFilters={ setFilters } />
-      {favorites ? (
-        <SmallRecipeCard
-          handleReload={ reloadFavorites }
-          isFavoritePage
-          recipes={ favorites }
-        />) : 'Nenhuma receita favoritada'}
+      <SmallRecipeCard
+        handleReload={ reloadFavorites }
+        isFavoritePage
+        recipes={ favorites }
+      />
     </div>
   );
 }

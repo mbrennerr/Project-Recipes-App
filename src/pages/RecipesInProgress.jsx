@@ -34,8 +34,24 @@ function RecipesInProgress() {
 
   if (path.includes('comidas')) {
     api = 'themealdb';
+    lsKey = 'meals';
+    idItem = 'idMeal';
+    thumb = 'strMealThumb';
+    title = 'strMeal';
+    category = 'strCategory';
+    area = 'strArea';
+    type = 'comida';
+    cat = 'strCategory';
   } else {
     api = 'thecocktaildb';
+    lsKey = 'cocktails';
+    idItem = 'idDrink';
+    thumb = 'strDrinkThumb';
+    title = 'strDrink';
+    category = 'strAlcoholic';
+    cat = 'strCategory';
+    area = '';
+    type = 'bebida';
   }
 
   const handleFecthDetails = async () => {
@@ -53,28 +69,6 @@ function RecipesInProgress() {
   if (details.length === 0) return 'loading';
   const listOfIngredients = handleIngredientsList(details[0]);
 
-  if (path.includes('comidas')) {
-    lsKey = 'meals';
-    idItem = 'idMeal';
-    thumb = 'strMealThumb';
-    title = 'strMeal';
-    category = 'strCategory';
-    area = 'strArea';
-    type = 'comida';
-    cat = 'strCategory';
-    tags = [details[0].strTags];
-  } else {
-    lsKey = 'cocktails';
-    idItem = 'idDrink';
-    thumb = 'strDrinkThumb';
-    title = 'strDrink';
-    category = 'strAlcoholic';
-    cat = 'strCategory';
-    area = '';
-    type = 'bebida';
-    tags = [];
-  }
-
   // a data eu peguei aqui https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript?rq=1
 
   let today = new Date();
@@ -83,6 +77,12 @@ function RecipesInProgress() {
   const yyyy = today.getFullYear();
 
   today = `${dd}/${mm}/${yyyy}`;
+
+  if (details[0].strTags === null) {
+    tags = [];
+  } else if (path.includes('comidas')) {
+    tags = details[0].strTags.split(',');
+  }
 
   const recipe = {
     id: details[0][idItem],
@@ -109,8 +109,10 @@ function RecipesInProgress() {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipesInProgress) {
       delete recipesInProgress[lsKey][id];
-      console.log(recipesInProgress);
       localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+      const checkboxes = JSON.parse(localStorage.getItem('checkboxes'));
+      delete checkboxes[id];
+      localStorage.setItem('checkboxes', JSON.stringify(checkboxes));
     }
   };
 

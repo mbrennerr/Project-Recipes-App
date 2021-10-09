@@ -5,7 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function ShareButton({ setLoadMessage, testid, smallRecipeCard, url }) {
+function ShareButton({ setLoadMessage, testid, smallRecipeCard, url, index }) {
   const { pathname } = useLocation();
   const { href } = window.location;
   let copyLink;
@@ -20,12 +20,8 @@ function ShareButton({ setLoadMessage, testid, smallRecipeCard, url }) {
   }
 
   const shareRecipe = () => {
-    setLoadMessage(true);
     copy(copyLink);
-    const TIME = 2000;
-    setTimeout(() => {
-      setLoadMessage(false);
-    }, TIME);
+    setLoadMessage(index);
   };
 
   return (

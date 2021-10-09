@@ -6,6 +6,17 @@ import ShareButton from './ShareButton';
 
 function SmallRecipeCard({ recipes, isFavoritePage, handleReload }) {
   const [message, setMessage] = useState(false);
+  const [messageIndex, setMessageIndex] = useState();
+
+  const changeMessage = (index) => {
+    setMessage(index);
+    setMessageIndex(index);
+    const time = 3000;
+    setMessage(true);
+    setTimeout(() => {
+      setMessage(false);
+    }, time);
+  };
 
   const orig = window.location.origin;
   return (
@@ -35,7 +46,8 @@ function SmallRecipeCard({ recipes, isFavoritePage, handleReload }) {
                 <ShareButton
                   testid={ `${index}-horizontal-share-btn` }
                   url={ `${orig}/${recipe.type}s/${recipe.id}` }
-                  setLoadMessage={ setMessage }
+                  setLoadMessage={ changeMessage }
+                  index={ index }
                   smallRecipeCard
                 />
                 {isFavoritePage && (<FavoriteButton
@@ -45,7 +57,8 @@ function SmallRecipeCard({ recipes, isFavoritePage, handleReload }) {
                   details={ recipe }
                 />)}
               </div>
-              <span hidden={ !message }> Link copiado! </span>
+              {/* Matheus Duarte me ajudou a pensar nisso */}
+              {index === messageIndex && <p hidden={ !message }> Link copiado! </p>}
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <p className="title" data-testid={ `${index}-horizontal-name` }>
                   {recipe.name}

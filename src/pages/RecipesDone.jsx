@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import SmallRecipeCard from '../components/SmallRecipeCard';
-import Header from '../components/Header';
-import '../styles/doneRecipes.css';
 import Filters from '../components/Filters';
+import Header from '../components/Header';
+import SmallRecipeCard from '../components/SmallRecipeCard';
+import '../styles/doneRecipes.css';
 
 function RecipesDone() {
   const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -17,17 +17,24 @@ function RecipesDone() {
     }
   }, [filters]);
 
+  if (!recipes || recipes.length === 0) {
+    return (
+      <div>
+        <Header />
+        <p>Opa, nenhuma receita finalizada!</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header />
       <div>
         <Filters setFilters={ setFilters } />
-        {doneRecipes ? (
-          <SmallRecipeCard
-            isFavoritePage={ false }
-            recipes={ doneRecipes }
-          />)
-          : 'Nenhuma receita concluída'}
+        <SmallRecipeCard
+          isFavoritePage={ false }
+          recipes={ doneRecipes }
+        />
       </div>
     </div>
   );
