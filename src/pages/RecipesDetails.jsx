@@ -100,10 +100,8 @@ function RecipesDetails() {
     }
   }, [recipes]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(setDetailsValues(true));
-    }
+  useEffect(() => () => {
+    dispatch(setDetailsValues(true));
   }, []);
 
   if (details.length === 0 || !details) return 'loading';

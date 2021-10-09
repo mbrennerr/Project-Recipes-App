@@ -110,6 +110,9 @@ function RecipesInProgress() {
     if (recipesInProgress) {
       delete recipesInProgress[lsKey][id];
       localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+      const checkboxes = JSON.parse(localStorage.getItem('checkboxes'));
+      delete checkboxes[id];
+      localStorage.setItem('checkboxes', JSON.stringify(checkboxes));
     }
   };
 
