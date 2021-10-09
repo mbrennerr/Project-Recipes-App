@@ -5,7 +5,7 @@ function StartRecipesBtn() {
   const history = useHistory();
   const path = history.location.pathname;
   const [recipeButtonText, setRecipeButtonText] = useState('Iniciar Receita');
-  const [disableButton, setDisableButton] = useState(false);
+  // const [disableButton, setDisableButton] = useState(false);
   const firstRender = useRef(true);
 
   const { id } = useParams();
@@ -67,7 +67,7 @@ function StartRecipesBtn() {
       data-testid="start-recipe-btn"
       onClick={ handleClick }
       className="btn-start"
-      disabled={ disableButton }
+      // disabled={ disableButton }
     >
       {recipeButtonText}
     </button>
