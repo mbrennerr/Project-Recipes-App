@@ -40,12 +40,12 @@ function StartRecipesBtn() {
     history.push(`${id}/in-progress`);
   };
 
-  const doubleRecipe = () => {
-    const double = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (double && double.some((item) => item.id === id)) {
-      setDisableButton(true);
-    }
-  };
+  // const doubleRecipe = () => {
+  //   const double = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   if (double && double.some((item) => item.id === id)) {
+  //     setDisableButton(true);
+  //   }
+  // };
 
   const handleButtonText = () => {
     const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -57,7 +57,7 @@ function StartRecipesBtn() {
   useEffect(() => {
     if (firstRender.current) {
       handleButtonText();
-      doubleRecipe();
+      // doubleRecipe();
     } else firstRender.current = false;
   });
 
